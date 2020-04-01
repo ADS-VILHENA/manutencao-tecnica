@@ -1,0 +1,8 @@
+PROJETO DE MANUTENÇÃO TÉCNICA
+
+Para iniciar o servidor NodeJS execute os comandos, na pasta raiz:
+
+#Se não possuir a pasta node_modules execute
+npm install
+#Iniciar o servidor NodeJS
+node app.js
