@@ -33,6 +33,10 @@ module.exports = (aplicacao)=>{
       aplicacao.app.controllers.GoogleFormsController.enviar_googleforms(req, res, formulario);
 
     })
+
+    aplicacao.get('/acao/salvar_chamado',(req,res)=>{
+     aplicacao.app.controllers.ChamadoController.salvar_chamado(aplicacao,req,res);
+    })
 }
 
     
