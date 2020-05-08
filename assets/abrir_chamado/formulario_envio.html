@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript">
-        function cinta(id){
-       
-       $.getJSON('http://localhost:2020/buscar/problemas/'+id, function (response) {
-               console.log(response);
-           });
-       }
-       cinta(1);
-       </script>
+    
 
     <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Kaushan+Script|Rubik+Mono+One|Salsa&display=swap"
         rel="stylesheet">
@@ -36,12 +28,12 @@
         </div>
     </header>
     <main>
-  <h1><%=dados.length%></h1>
+
 
         <div class="container-fluid h-100">
             <div class="row form-cadastro justify-content-center">
                 <div class="col-md-3 align-self-center area-form">
-                    <img src="../../images/fabrica-manutencao-logo 2.png" class="mx-auto d-block mt-5" />
+                    <img src="../images/fabrica-manutencao-logo 2.png" class="mx-auto d-block mt-5" />
                     <div>
                       
                         <h1 class="d-block text-center mt-5" style="font-size: 20px;">Informe abaixo o problema: </h1>
@@ -53,19 +45,17 @@
                             </div>
 
                             <div>
-                                <input type="text" id="area" name="area" class="form-control bg-light rounded mt-4" value="<%= dados[0].nome%>"
+                                <input type="text" id="area" name="area" class="form-control bg-light rounded mt-4" value="TESTE"
                                     readonly>
                             </div>
                             <div>
                                 <select class="form-control mt-4" id="equipamento" name="equipamento">
-                                   <%
-                                   if(dados.length == 1){ %>
-                                    <option value = "<%= dados[0].id_equipamento%>"><%= dados[0].nome_equipamento%></option> 
-                                   <%}else{
-                                    for(var i = 0; i < dados.length; i++){%>
-                                    <option value = "<%= dados[i].id_equipamento%>"><%= dados[i].nome_equipamento%></option>
-                                    <%}%>
-                                   <%}%>
+                                  
+                                    <option value = "A">A</option> 
+                                   
+                                    
+                                    <option value = "B">B</option>
+                                   
 
                                     
                                 </select>
@@ -102,31 +92,7 @@
         </div>
     </main>
    
-    
-    <script type="text/javascript">
-     $("#equipamento").click(function() {
-        $("#problema").empty();
-        const url = "http://localhost:2020/buscar/problemas/"+$("#equipamento").val();
-const body = { name: "teste" }
-
-fetch(url, {
-  method: 'GET'
-})
-  .then((res) => res.json())
-  .then((response) => {
-    for(var i=0;i<response.length;i++){
-        $('#problema').append($('<option>', {
-    value: response[i].nome_problema,
-    text: response[i].nome_problema
-}));
-    }
-  })
-}
-
-
-);
-   
-    </script>
+ 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
