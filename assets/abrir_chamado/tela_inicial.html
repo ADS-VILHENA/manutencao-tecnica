@@ -36,11 +36,38 @@
                    <em> <h1 class="text-center text-gray p-3" style="font-size: 15px;">*Escaneie o QRCode para abrir chamado.</h1></em>
                 </div>
                 <div>
-                 <a href="/lerQRCode"><img src="../images/QRcode.png" class="mx-auto d-block mt-5"/></a>
-               </div>
+                    <div>
+                        <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>	
+                      <video id="preview"></video>
+                      <script>
+                          function lerQRCode(){
+
+                        
+                          let scanner = new Instascan.Scanner(
+                              {
+                                  video: document.getElementById('preview')
+                              }
+                          );
+                          scanner.addListener('scan', function(content) {
+                              alert('Escaneou o conteudo: ' + content);
+                              window.open(content, "_self");
+                          });
+                          Instascan.Camera.getCameras().then(cameras => 
+                          {
+                              if(cameras.length > 0){
+                                  scanner.start(cameras[0]);
+                              } else {
+                                  console.error("Não existe câmera no dispositivo!");
+                              }
+                          })
+                        }
+                      </script></div>
+
+                 <a href="#"><img src="../images/QRcode.png" onclick="lerQRCode().style.display = 'none';" class="mx-auto d-block mt-5"/></a>
+                    </div>
          
                 <div>
-                    <button type="button" class="mx-auto d-block btn btn-primary mt-4">Ler QRCode</button>
+                    <button type="button" onclick="lerQRCode()" class="mx-auto d-block btn btn-primary mt-4" >Ler QRCode</button>
                 </div>
                
             
