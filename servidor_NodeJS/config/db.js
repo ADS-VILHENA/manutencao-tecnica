@@ -8,4 +8,6 @@ var connection = mysql.createConnection({
         database: 'manutencao_tecnica'
     });
 
+
 module.exports = connection;
+
