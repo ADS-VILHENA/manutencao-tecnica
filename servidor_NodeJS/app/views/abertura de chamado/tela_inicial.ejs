@@ -56,8 +56,10 @@
                                         }
                                     );
                                     scanner.addListener('scan', function (content) {
-                                        alert('Escaneou o conteudo: ' + content);
-                                        window.open(content, "_self");
+                                        content = content.toString();
+                                        //alert('Escaneou o conteudo: ' + content);
+                                        //window.open(content, "_self");
+                                        chamar_formulario_por_QRCode(content);
                                     });
                                     Instascan.Camera.getCameras().then(cameras => {
                                         if (cameras.length > 0) {
@@ -67,17 +69,44 @@
                                         }
                                     })
                                 }
+                                function chamar_formulario_por_QRCode(id_qr) {
+
+                                    
+                                    let formulario = document.getElementById("form-codigo");
+                                    let inputtext = document.getElementById("codigo");
+
+                                    inputtext.value = id_qr;
+                                    formulario.submit();
+                                    
+                                    /*fetch("exibir/formulario/",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify(codigo)
+                                        }).then((res)=>{
+                                            res.redirected;
+                                        });
+                                        */
+                                }
                             </script>
                         </div>
                         <h1 class="text-center text-gray p-3" style="font-size: 20px;">Ou</h1>
 
-                        <form action="/exibir/formulario" method="post">
-                            <input type="text" class="mx-auto form-control" style="width: 40%;" name="codigo"
+                        <form id="form-codigo" action="/exibir/formulario" method="post">
+                            <input type="text" class="mx-auto form-control" style="width: 40%;" value = "Insira o codigo" name="codigo"
                                 id="codigo">
                             <button type="submit" class="mx-auto d-block btn btn-success mt-2 ">Informar o
                                 código</button>
                         </form>
                     </div>
+                    <%if(erro.erro == 1){%>
+                    <div id = "alert-erro" class="alert alert-danger mt-5" role="alert">
+                        <p>Código incorreto(a), ou não encontrado.</p>
+                      </div>
+                      <%}%>
 
                 </div>
             </div>
@@ -85,6 +114,11 @@
     </main>
 
     <footer style="color: green;"></footer>
+    <script type="text/javascript">
+        setTimeout(function() {
+            $("#alert-erro").fadeOut().empty();
+        }, 2000);
+</script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
