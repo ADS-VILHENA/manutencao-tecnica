@@ -16,7 +16,8 @@ app.set('views','./app/views');
 
 //configurar o middleware express.static
 app.use(express.static('./app/public'));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:false}));
 
 //configurando o middleware express-validator
 
@@ -25,8 +26,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 //configurando o consign (carregar os meus arquivos essenciais dentro da variável app)
 consign()
 .include('app/routes')
-.then ('app/models')
+.then ('app/model')
 .then('app/controllers')
+.then('config/db.js')
 .into(app);
 
 //exportando o objeto app
