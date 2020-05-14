@@ -19,43 +19,45 @@ module.exports.salvar_chamado=(app,req,res,chamado)=>{
     }
 module.exports.enviar_arquivo = function(app, req, res,uploadpath){
     //fazer upload do arquivo
+    console.log(req.files);
     
     const promise = new Promise( (resolve, reject) => { 
         
+    if(req.files == null){
+        console.log("Não há arquivos para fazer upload!");
+        resolve(0);
+    }else{
+        if (req.files.upfile) {
+            var file = req.files.upfile;
+            
+            let type = file.mimetype;
+            
            
-    if (req.files.upfile) {
-        var file = req.files.upfile;
-        
-        let type = file.mimetype;
-   
+           
+            let resultado_envio_arquivo;
+            let resultado = 0;
        
+            file.mv(uploadpath, function (err) {
+                if (err) {
+                    resultado = 1;
+                    
+                    resolve (1);
+                }
+                else{
+                    resultado = 0;
+                     resolve (0);
+                }
        
-        let resultado_envio_arquivo;
-        let resultado = 0;
-   
-        file.mv(uploadpath, function (err) {
-            if (err) {
-                resultado = 1;
-                
-                resolve (1);
-            }
-            else{
-                resultado = 0;
-                 resolve (0);
-            }
-   
-        });
+            });
+        }
+        else {
+           resultado = 0;
+           resolve (0);
+        };
     }
-    else {
-       resultado = 0;
-       return 1;
-    };
-     
-    resolve (1);
-    
    
-      
-         reject(new Error(1));
+
+        // reject(new Error(1));
         
     });
 return promise;
@@ -166,4 +168,22 @@ module.exports.enviar_chamado = (app, req, res)=>{
     ;
  //implementar o envio do arquivo e salvar os dados.
 
+}
+
+module.exports.download_arquivo =  (app, req, res,name)=>{
+    var path = require("path")
+    var mime = require("mime")
+    var fs = require("fs")
+    //res.sendFile(path.join(__dirname,'../..')+'/anexos/'+name);
+
+    var file = path.join(__dirname,'../..')+'/anexos/'+name;
+
+    var filename = path.basename(file);
+    var mimetype = mime.lookup(file);
+  
+    res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+    res.setHeader('Content-type', mimetype);
+  
+    var filestream = fs.createReadStream(file);
+    filestream.pipe(res);
 }

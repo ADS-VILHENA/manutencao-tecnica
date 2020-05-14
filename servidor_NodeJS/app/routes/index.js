@@ -113,6 +113,13 @@ module.exports = (aplicacao) => {
         
     });
 
+    aplicacao.get('/download/:name',function(req,res){
+      let name = req.params.name;
+      
+      aplicacao.app.controllers.ChamadoController.download_arquivo(aplicacao,req,res,name);
+      
+        })
+
     //rota para salvar documentos na pasta
 }
 
