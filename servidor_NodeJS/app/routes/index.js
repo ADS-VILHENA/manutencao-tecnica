@@ -5,7 +5,8 @@ module.exports = (aplicacao) => {
 
     //rota para visualizar a página inicial
     aplicacao.get('/', (req, res) => {
-        aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 0 });
+        let erros_submit = [];
+        aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 0 },erros_submit);
     })
 
     aplicacao.post('/exibir/formulario/', (req, res) => {
@@ -75,16 +76,7 @@ module.exports = (aplicacao) => {
     //rota para enviar dados para o googleForms
     aplicacao.get('/acao/enviar_googleforms', (req, res) => {
         //informar os dados do formulário que vai ser enviado
-        var formulario = {
-            descricao: "Queimou a televisão após a chuva de ontem",
-            problema: "Televisão não liga",
-            equipamento: "Televisao",
-            area: "SALA A",
-            cpf: "02476801259"
-        }
-
-
-        aplicacao.app.controllers.GoogleFormsController.enviar_googleforms(req, res, formulario);
+        
 
     })
 
@@ -112,6 +104,13 @@ module.exports = (aplicacao) => {
         //enviar para email ou google_forms
         
     });
+
+    aplicacao.get('/download/:name',function(req,res){
+      let name = req.params.name;
+      
+      aplicacao.app.controllers.ChamadoController.download_arquivo(aplicacao,req,res,name);
+      
+        })
 
     //rota para salvar documentos na pasta
 }
