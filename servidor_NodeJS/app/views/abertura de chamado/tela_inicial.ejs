@@ -108,6 +108,18 @@
                       </div>
                       <%}%>
 
+                      <%if(erros_submit.length > 0){%>
+                        <% if (erros_submit.upload == 0 && erros_submit.email == 0 && erros_submit.googleForms == 0 && erros_submit.banco == 0){%>
+                        <div class="alert alert-success mt-5" role="alert">
+                           O seu chamado foi aberto com sucesso.
+                          </div>
+                          <%}else{%>
+                            <div class="alert alert-danger mt-5" role="alert">
+                                Algo deu errado, não foi possível abrir seu chamado. Notifique o administrador do sistema!
+                              </div>
+                            <%}%>
+                            <%}%>
+
                 </div>
             </div>
         </div>
