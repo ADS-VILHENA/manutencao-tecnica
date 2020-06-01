@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function cinta(id){
        
-       $.getJSON('http://localhost:2020/buscar/problemas/'+id, function (response) {
+       $.getJSON('http://localhost:2525/buscar/problemas/'+id, function (response) {
                console.log(response);
            });
        }
@@ -35,9 +35,8 @@
             </div>
         </div>
     </header>
-    <main>
- 
-
+    <main >
+ <div id = "main">
         <div class="container-fluid h-100">
             <div class="row form-cadastro justify-content-center">
                 <div class="col-md-3 align-self-center area-form">
@@ -87,11 +86,11 @@
                                 <label for="upfile">Anexe aqui um arquivo</label>
                                 <input type="file" class="form-control-file" name = "upfile" id="upfile" value="">
                               </div>
-                            <button type="submit" class="btn btn-success float-right mt-4 ">Enviar</button>
+                            <button type="submit" class="btn btn-success float-right mt-4 " id = "submit" name = "submit">Enviar</button>
                             
 
                         </form>
-                       
+                      
 
                     </div>
 
@@ -99,15 +98,26 @@
                 </div>
             </div>
         </div>
+    </div>
+
+        <div>
+            <img src="../../images/carregar.gif" style="display: none;" id="carregar"/>
+           </div>
+       
     </main>
    
     
     <script type="text/javascript">
    
+   $('#submit').click(function(){
+        $('#main').css('display','none');
+        $('#carregar').css('display','flex');
+        $('#carregar').css('margin','0 auto');
+    });
 
      $("#equipamento").click(function() {
         $("#problema").empty();
-        const url = "http://localhost:2020/buscar/problemas/"+$("#equipamento").val();
+        const url = "http://localhost:2525/buscar/problemas/"+$("#equipamento").val();
 const body = { name: "teste" }
 
 fetch(url, {
