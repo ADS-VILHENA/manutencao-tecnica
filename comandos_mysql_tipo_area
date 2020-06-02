@@ -1,0 +1,35 @@
+tipo de area
+ nome da tabela: tipo_area
+
+Insert
+(exemplo)
+insert into tipo_area(nome_tipo_area,descricao_tipo_area)values(Refeitorio, Possui eletrodomesticos);
+
+
+insert into tipo_area(nome_tipo_area,descricao_tipo_area)values(?, ?);
+
+Delete
+(exemplo)
+delete from tipo_area where id_tipo_area = 8;
+
+
+delete from tipo_area where id_tipo_area = ?;
+
+
+Update
+(exemplo)
+update tipo_area set nome_tipo_area = 'Refeitorio' where id_tipo_area = 9;
+
+
+update tipo_area set nome_tipo_area = '?' where id_tipo_area = ?;
+
+
+Read
+(exemplo)
+por id:
+select tipo_area.nome_tipo_area, tipo_area.descricao_tipo_area from tipo_area where tipo_area.id_tipo_area = 3;
+
+select tipo_area.nome_tipo_area, tipo_area.descricao_tipo_area from tipo_area where tipo_area.id_tipo_area = ?;
+
+Todos:
+select tipo_area.nome_tipo_area, tipo_area.descricao_tipo_area from tipo_area;
