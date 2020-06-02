@@ -1,6 +1,3 @@
-tipo de area
- nome da tabela: tipo_area
-
 Insert
 (exemplo)
 insert into tipo_area(nome_tipo_area,descricao_tipo_area)values(Refeitorio, Possui eletrodomesticos);
@@ -17,11 +14,9 @@ delete from tipo_area where id_tipo_area = ?;
 
 
 Update
-(exemplo)
-update tipo_area set nome_tipo_area = 'Refeitorio' where id_tipo_area = 9;
 
 
-update tipo_area set nome_tipo_area = '?' where id_tipo_area = ?;
+update tipo_area set nome_tipo_area = '?'descricao_tipo_area = '?' where id_tipo_area = ?;
 
 
 Read
@@ -33,3 +28,4 @@ select tipo_area.nome_tipo_area, tipo_area.descricao_tipo_area from tipo_area wh
 
 Todos:
 select tipo_area.nome_tipo_area, tipo_area.descricao_tipo_area from tipo_area;
+
