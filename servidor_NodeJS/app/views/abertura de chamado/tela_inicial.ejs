@@ -44,17 +44,20 @@
                         <div>
                             <script type="text/javascript"
                                 src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-                            <video id="preview" class="mx-auto d-block mt-5" width="50%" height="50%"
-                                style="border-radius: 20px; border-color: green 20px; "></video>
+                            <video id="preview" class="mx-auto d-block mt-5" 
+                                style="text-align: center; width: 300px; height: 300px; border:2px; border-radius: 15px; border-color: green;"></video>
                             <script>
 
                                 function lerQRCode() {
 
                                     let scanner = new Instascan.Scanner(
                                         {
-                                            video: document.getElementById('preview')
+                                            video: document.getElementById('preview'),
+                                            mirror:false
+
                                         }
                                     );
+
                                     scanner.addListener('scan', function (content) {
                                         content = content.toString();
                                         //alert('Escaneou o conteudo: ' + content);
@@ -62,9 +65,12 @@
                                         chamar_formulario_por_QRCode(content);
                                     });
                                     Instascan.Camera.getCameras().then(cameras => {
-                                        if (cameras.length > 0) {
-                                            scanner.start(cameras[0]);
-                                        } else {
+                                        if (cameras.length > 1) {
+                                            scanner.start(cameras[1]);
+                                        } else if (cameras.length == 1){
+                                            scanner_for_pc.start(cameras[0]);
+                                        }
+                                        else {
                                             console.error("Não existe câmera no dispositivo!");
                                         }
                                     })
