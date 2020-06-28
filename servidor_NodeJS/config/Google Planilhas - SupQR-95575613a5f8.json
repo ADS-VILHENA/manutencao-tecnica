@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "massive-mantra-281718",
+  "private_key_id": "95575613a5f83962950b52804a96c00afddda9a6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCUtP93yRwGbTh4\n0fejbd0vxVgqyzO81fOtWJ0klXu1HXQ2HGqOP4i9d5Pk6M307z6+ILKuS4jjZNYa\n8pQMucmZ6oXal0zRAw20LMTE6MowjXvcWOcOIBeX3CUKQLo61wB9l0bOvxkAw5Rh\nQiXxBEvXF3wf3zzvoxhmVlcTwXtI+6f/XSxsfWvb8tNLnR4gr/9lHYHrAoHUXZim\nCUcXZDwTEpNRCzIELQFoJQHVzxUxb70j3X/hLY2YkhPFuViPkV2zijyvQOXzUJTB\njSDNSqqVvki+Ql3X3kbhpLuEwDD3T4IAKFskiaQvQvn29KhrwOo2QI5PEDDhQysj\ngAYvNZqvAgMBAAECggEAL1SIdxy4YcdDkRjrI8Yk/z5leIFifzjtrP+mTG2TiSrN\nwSc8Nvg70moL1XDPlKTNKICJvnXmJNIEX2FUA9TiOK3vWoqLdX7uTqltG2soZ1mw\n0YouSE2olLoJxACkBXRHALI0ZDtoftjBEk+WeeavKM+dvxszbuZPLstOPch4L9sE\n/D8Km2FupOGRDzjvdopNjGQyC3F+tj8G+OoCjbG6ycKrUHna5Mswapcv4ljrdcyI\nJi93h/vEcHvk19ZrLaQykvr4LDlPLuJTYl9EHYegIipPidJll73YYYq7GCHjV1US\n3PmzOE+tmoPSUPRW8LRlPBtF5ckU15Vx2nQMVtg9YQKBgQDHGDY/37t8aTTRipU6\nUc46Tf/7NvhNI7QExklKZP04CWDZuIBAfjEcnay3tGcSDRVjAUv71oPnUjgtXp7o\nnavp8oHWd8EUOMclDkCKfUny1v4y4KXaTLgYm9O6vuWMXq03X+WeIJYYM6gmux1A\niNide7CSnx7XCLxM4B6HT34l8QKBgQC/NetHlbqCjA7/DnwqwHbSqvhI8DUJSLoC\nImEvhcMxAw+va3ynPWz5NBITQHvPkAK/uJvtOhshszhEr7GzSRQGbM9EY+74QDgW\noKYQD94vne1dG60W49omFPsznv+UGUkT2f9oLEG54YtTmTrg+FTtf1CkjJKVmCPI\nrSydQ0qqnwKBgAVgiAaNmliv1rdaENG0Z+d3N9SnFWmv7yq52DzkIVqkFjOLIhub\nzOPC9mk3vBjmtY8o985jasiSleXTymLp7zywSgVq0pIjPm2nxuJ2o8qlN9RT8ObG\nb6pqevtuMHDsFa2LL35nzuX0bzQslYuqpn8KWih7l6+jEsLYwrpQ0U1hAoGBAIFG\nniUO6UOcGAN/splg+LUkHKuLo//76K7KubRcloSLkk5CuMuFbyjpeJMFlO/XaNRg\npyNzlqZpOlDODLGvZdeWN2gAvK+hE4rQ4JWZdNnyx2mc7aC9Ol9m7hOPmzJxCgRe\n7hxrV6CqCf3ianlxzFGqM0adN/nmG8Nwueo1dcT3AoGALRKO/K9OzzLwjzHrsT0y\nxNnXNrVnQuytXJaOyEtS0uZS0iqKH9sZpWQMJq+JoN+9E5dp9rX5fPWOOS8ISyLi\nXTEKP8W5y0fwXRPrKo5Zsk5USOvk4XiSmGJvk5wO+n8yMCYkAdjpzTXEwxW+86pm\nsPiwrobfhBA8c6/Ok27GADA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "chamados-supqr@massive-mantra-281718.iam.gserviceaccount.com",
+  "client_id": "107199308796282450693",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chamados-supqr%40massive-mantra-281718.iam.gserviceaccount.com"
+}

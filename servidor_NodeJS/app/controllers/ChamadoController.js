@@ -1,4 +1,50 @@
 
+
+module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
+
+    const promise = new Promise((resolve, reject) => {
+        const { GoogleSpreadsheet } = require('google-spreadsheet');
+
+        async function accessSpreadsheet() {
+            // spreadsheet key is the long id in the sheets URL
+            const doc = new GoogleSpreadsheet('18nnEYqZigMsBaunFAU6od_j4yMyYzzO1_DKeV4kE_AI');
+            const creds = require('../../config/Google Planilhas - SupQR-95575613a5f8.json');
+            // use service account creds
+            await doc.useServiceAccountAuth({
+                client_email: creds.client_email,
+                private_key: creds.private_key,
+            });
+            // OR load directly from json file if not in secure environment
+            await doc.useServiceAccountAuth(require('../../config/Google Planilhas - SupQR-95575613a5f8.json'));
+            // OR use API key -- only for read-only access to public sheets
+            //doc.useApiKey('YOUR-API-KEY');
+
+            await doc.loadInfo(); // loads document properties and worksheets
+            console.log(doc.title);
+            //await doc.updateProperties({ title: 'renamed doc' });
+
+            const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+            console.log(sheet.title);
+            console.log(sheet.rowCount);
+
+            // adding / removing sheets
+            //const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
+
+
+
+            //adicionando uma linha no googlesheets
+            const nova_linha = await sheet.addRow(chamado, (req, res) => {
+                resolve(0);
+            });
+
+
+        }
+        accessSpreadsheet();
+
+    });
+    return promise;
+}
+
 module.exports.salvar_chamado = (app, req, res, chamado) => {
 
     //armazenar os dados do chamado no JSON abaixo
@@ -20,7 +66,7 @@ module.exports.salvar_chamado = (app, req, res, chamado) => {
 }
 module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
     //fazer upload do arquivo
-    console.log(req.files);
+    //console.log(req.files);
 
     const promise = new Promise((resolve, reject) => {
 
@@ -29,12 +75,15 @@ module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
             resolve(1);
         } else {
             if (req.files.upfile) {
-                var file = req.files.upfile;
-
-                let type = file.mimetype;
-
-
-
+               var file = req.files.upfile;
+               let tipo = file.name.toString().split(".");
+               console.log(tipo);
+             //  uploadpath = uploadpath+"."+tipo[1];
+                // var type = req.files.upfile.name.split(".");
+                //uploadpath = uploadpath+"."+type[1];
+                let type = file.type;
+                
+            
                 let resultado_envio_arquivo;
                 let resultado = 0;
 
@@ -90,7 +139,7 @@ module.exports.buscar_info_QRCodeArea = (aplicacao, req, resposta, codigo) => {
     var noticia_model = new aplicacao.app.model.ChamadoDAO(conexao);
     let id_qrcode = codigo;
     noticia_model.buscar_info_QRCodeArea(id_qrcode, (req, res) => {
-        let erro = {erro : 0};
+        let erro = { erro: 0 };
 
         //vai verificar se o retorno do banco é vazio, se for vazio volta o home
         if (res.length < 1) {
@@ -148,7 +197,10 @@ module.exports.enviar_chamado = (app, req, res) => {
     var path = require("path")
     let name = uuidv4();
     //definindo o path do arquivo
-    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name;
+    var file = req.files.upfile;
+    let tipo = file.name.toString().split(".");
+
+    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name + "."+tipo[1];
 
     let enviar_arquivo = this.enviar_arquivo(app, req, res, uploadpath);
     let chamado = {
@@ -169,10 +221,10 @@ module.exports.enviar_chamado = (app, req, res) => {
     enviar_arquivo
         .then(
             //imprimi o resultado do upload do arquivo 1 = ERRO; 0 = SUCESSO; 
-            (resultado) => { 
-                    erros.upload = 0;
-                
-                 })
+            (resultado) => {
+                erros.upload = 0;
+
+            })
         .then(() => {
 
             return this.salvar_chamado(app, req, res, chamado);
@@ -183,7 +235,7 @@ module.exports.enviar_chamado = (app, req, res) => {
             erros.banco = resultado;
             //enviar para o google forms
             var formulario = {
-                anexo: 'http://localhost:2020/download/' + name,
+                anexo: 'http://localhost:2525/download/' + name,
                 descricao: req.body.descricao,
                 problema: req.body.problema,
                 equipamento: req.body.equipamento,
@@ -205,25 +257,32 @@ module.exports.enviar_chamado = (app, req, res) => {
             };
             return app.app.controllers.EmailController.enviar_email(req, res, mailOptions);
         })
+
         .then((resultado) => {
             erros.email = resultado;
             console.log(erros);
-
-            //preparando as variáveis para chamar o formulário
-            let erro = [];
-            let dados_area_equipamento = [
-                {
-                    nome_equipamento: '',
-                    id_equipamento: '',
-                    nome: ''
-                }
-            ];
-
-
-            this.visualizar_home(app, req, res, erro, erros);
             //res.end();
-        })
-        ;
+        }).then(() => {
+
+            var data = new Date();
+
+            let chamado = {
+                data: data.getDate,
+                descricao: req.body.descricao,
+                problema: req.body.problema,
+                equipamento: req.body.equipamento,
+                area: req.body.area,
+                cpf: req.body.cpf_usuario,
+                anexo: "https://192.168.8.109:2525/download/" + name +"."+tipo[1]
+            }
+            app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado);
+
+        }, () => {
+            console.log("Não enviou")
+        }).then(() => {
+            let erro = {};
+            this.visualizar_home(app, req, res, erro, erros);
+        });
     //implementar o envio do arquivo e salvar os dados.
 
 }
