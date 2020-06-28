@@ -37,10 +37,17 @@ aplicacao.get('/painel_admin/cadastrar_tipoarea', (req, res) => {
 
 })
 
+aplicacao.delete('/painel_admin/deletar_tipoareas', (req, res) => {
+  
+    aplicacao.app.controllers.TipoAreaController.deletar_tipoarea(aplicacao, req, res);
+ })
+
 aplicacao.post('/painel_admin/acao/salvar_tipoarea', (req, res) => {
   
    aplicacao.app.controllers.TipoAreaController.salvar_tipoarea(aplicacao, req, res);
 })
+
+
 
 aplicacao.post('/painel_admin/acao/atualizar_tipoarea',(req,res)=>{
    aplicacao.app.controllers.TipoAreaController.atualizar_tipoarea(aplicacao, req, res);

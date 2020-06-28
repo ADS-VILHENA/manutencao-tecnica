@@ -44,8 +44,19 @@ module.exports.visualizar_listar_tipo_area = (aplicacao, req, res)=>{
   });
   
   }
-  
-  
+
+  module.exports.deletar_tipoarea = function(aplicacao, req, res){
+    var conexao = aplicacao.config.db;
+    var tipo_de_area = new aplicacao.app.model.TipoAreaDAO(conexao);
+
+    tipo_de_area.deletar_tipoarea(() =>{
+      res.render("painel admin/pesquisar_tipo_area");
+    });
+
+   
+
+  }
+   
   module.exports.salvar_tipoarea = function(aplicacao,req,res){
   var conexao = aplicacao.config.db;
   var tipoarea_model = new aplicacao.app.model.TipoAreaDAO(conexao);
@@ -62,3 +73,5 @@ module.exports.visualizar_listar_tipo_area = (aplicacao, req, res)=>{
   });
 
   }
+
+ 

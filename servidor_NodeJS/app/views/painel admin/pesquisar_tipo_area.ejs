@@ -21,7 +21,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <a href="#" ><button type="button" class="btn btn-danger" >Deletar</button></a>
+          <a onclick="remove(this)" ><button type="button" class="btn btn-danger" >Deletar</button></a>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <header >
             <div class="h-100"> <!--retirar classe container-fluid -->
                 <div class="row form-cadastro justify-content-center ">
-                    <div class="col-md-5 align-self-center area-form">
+                    <div class="col-md align-self-center area-form">
                         <div>
                             <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Pesquisar tipo de área</h1>
                         </div >
@@ -57,7 +57,7 @@
         <main>
             <div class="container-fluid h-100">
                 <div class="row form-cadastro justify-content-center ">
-                    <div class="col-md-5 align-self-center area-form">        
+                    <div class="col-md-7 align-self-center area-form">        
                         <div>
                             <h1 class="small d-block text-left ml-0 mt-4">Pesquisar tipo de área: </h1>
                             <input type="text" class="form-control bg-light col-9" placeholder="Área">
@@ -93,14 +93,33 @@
             }
 
         </script>
+         <script type="text/javascript">
 
-        <script>
-
-            function deletar_id_tipo_area (id){
-                console.log(id);
-            }
-
+            $("#adicionar").click(function () {
+                let problema = document.getElementById("novo_problema").value;
+    
+                var linha = "<tr>";
+                linha += '<td>' + '</td>';
+    
+                linha += '<td><input type="text" id="problema_novo" name="problema_novo[]" value="Problema A"></td>';
+                linha += '<td><a onclick="remove(this)" class="btn btn-link"><img src="../../images/remover.png " width="35px" height="35px" ></a></td>'
+                linha += '</tr>';
+    
+                $("#tabela_equipamentos").append(linha);
+            });
+    
+            (function ($) {
+                remove = function (item) {
+                    var tr = $(item).closest('tr').remove();
+                }
+            })(jQuery);
+    
+          
+    
+        
         </script>
+
+       
 
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
