@@ -9,7 +9,7 @@
         <title>Pesquisar Área</title>
     </head>
         <!-- Modal -->
-<div class="modal fade" id="Pesquisar_equipamento" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+<div class="modal fade" id="Pesquisar_tipo_de_area" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -21,26 +21,19 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger">Deletar</button>
+          <a onclick="remove(this)" ><button type="button" class="btn btn-danger" >Deletar</button></a>
         </div>
       </div>
     </div>
   </div>
     
     <body id="pesquisar_area">
-
-
-  
-
-
-
-
         <header >
             <div class="h-100"> <!--retirar classe container-fluid -->
                 <div class="row form-cadastro justify-content-center ">
                     <div class="col-md align-self-center area-form">
                         <div>
-                            <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Pesquisar Equipamento</h1>
+                            <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Pesquisar tipo de área</h1>
                         </div >
                         <img src="../images/fabrica-manutencao-logo 2.png" class="float-right mr-1" style="margin-top: -60px;" height="auto" width="50px">
                         <div class="dropdown">
@@ -66,23 +59,22 @@
                 <div class="row form-cadastro justify-content-center ">
                     <div class="col-md-7 align-self-center area-form">        
                         <div>
-                            <h1 class="small d-block text-left ml-0 mt-4">Pesquisar Equipamento: </h1>
-                            <input type="text" class="form-control bg-light col-9" placeholder="Equipamento">
+                            <h1 class="small d-block text-left ml-0 mt-4">Pesquisar tipo de área: </h1>
+                            <input type="text" class="form-control bg-light col-9" placeholder="Área">
                             <button class="float-right mr-5 btn btn-link"><img src="../images/a.png"width="30px" height="30px" style="margin-top: -40px; margin-right:-50px;" class="float-right " ></button>
                         </div>
                         <div style="margin-top: 8px; border-top: 2px solid #000000;"> </div>
                         <!-- esta informação só vai aparecer quando tiver áreas cadastradas coloquei um exemplo para ver como fica -->
                         <div>
                             <div>
-
-                                <% if(equipamentos.length > 0){%>
-                                    <%for(var i = 0; i<equipamentos.length ; i++){%>
-                                    <input type="text" class="form-control bg-light col-9 mt-4" value="<%= equipamentos[i].nome_equipamento %>" >
-                                    <button class="float-right mr-5 btn btn-link" data-toggle="modal" data-target="#Pesquisar_equipamento" style="margin-top: -43px;"><img src="../images/remover.png " width="35px" height="35px" style="margin-right: -25px;" onclick=imprimir_id_equipamento(<%= equipamentos[i].id_equipamento %>); ></button>
-                                    <button class="float-right  btn btn-link" style="margin-top: -43px; margin-right: -120px;"><img src="../images/lapis.png " width="35px" height="35px" style="margin-right: 19px;" onclick=imprimir_id_equipamento(<%= equipamentos[i].id_equipamento %>)></button>
-                               <%}%>
+                                <% if(tipodearea.length > 0){%>
+                                    <%for(var i= 0;i<tipodearea.length; i++){%>
+                                    <input type="text" class="form-control bg-light col-9 mt-4 " readonly value="<%= tipodearea[i].nome_tipo_area %>">
+                                    <button class="float-right mr-5 btn btn-link" data-toggle="modal" data-target="#Pesquisar_tipo_de_area" style="margin-top: -43px;"><img src="../images/remover.png " width="35px" height="35px" style="margin-right: -25px;"onclick=imprimir_id_tipo_area(<%= tipodearea[i].id_tipo_area %>); ></button>
+                                    <button class="float-right  btn btn-link" style="margin-top: -43px; margin-right: -120px;"><img src="../images/lapis.png " width="35px" height="35px" style="margin-right: 19px;" onclick=imprimir_id_tipo_area(<%= tipodearea[i].id_tipo_area %>) ></button>
+                                <%}%>
                                     <%}%>
-                                
+
                             </div> 
                         </div>
                         <div>
@@ -92,15 +84,43 @@
                 </div>
             </div>
         </main>
- 
+
 
         <script>
 
-            function imprimir_id_equipamento (id){
+            function imprimir_id_tipo_area (id){
                 console.log(id);
             }
 
         </script>
+         <script type="text/javascript">
+
+            $("#adicionar").click(function () {
+                let problema = document.getElementById("novo_problema").value;
+    
+                var linha = "<tr>";
+                linha += '<td>' + '</td>';
+    
+                linha += '<td><input type="text" id="problema_novo" name="problema_novo[]" value="Problema A"></td>';
+                linha += '<td><a onclick="remove(this)" class="btn btn-link"><img src="../../images/remover.png " width="35px" height="35px" ></a></td>'
+                linha += '</tr>';
+    
+                $("#tabela_equipamentos").append(linha);
+            });
+    
+            (function ($) {
+                remove = function (item) {
+                    var tr = $(item).closest('tr').remove();
+                }
+            })(jQuery);
+    
+          
+    
+        
+        </script>
+
+       
+
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

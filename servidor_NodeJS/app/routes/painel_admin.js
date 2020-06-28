@@ -20,5 +20,36 @@ aplicacao.post('/painel_admin/acao/salvar_equipamento', (req, res) => {
 aplicacao.post('/painel_admin/acao/atualizar_equipamento',(req,res)=>{
     aplicacao.app.controllers.EquipamentoController.atualizar_equipamento(aplicacao, req, res);
 })
+//rota para listar tipos de area painel admin
+aplicacao.get('/painel_admin/pesquisar_tipo_areas', (req, res) => {
+    aplicacao.app.controllers.TipoAreaController.visualizar_listar_tipo_area(aplicacao, req, res);
+})
 
+//rota para listar area painel admin
+aplicacao.get('/painel_admin/pesquisar_areas', (req, res) => {
+   aplicacao.app.controllers.AreaController.visualizar_listar_area(aplicacao, req, res);
+})
+
+// rotas tipo_area
+aplicacao.get('/painel_admin/cadastrar_tipoarea', (req, res) => {
+    
+    aplicacao.app.controllers.TipoAreaController.visualizar_cadastrar_tipoarea(aplicacao, req, res);
+
+})
+
+aplicacao.delete('/painel_admin/deletar_tipoareas', (req, res) => {
+  
+    aplicacao.app.controllers.TipoAreaController.deletar_tipoarea(aplicacao, req, res);
+ })
+
+aplicacao.post('/painel_admin/acao/salvar_tipoarea', (req, res) => {
+  
+   aplicacao.app.controllers.TipoAreaController.salvar_tipoarea(aplicacao, req, res);
+})
+
+
+
+aplicacao.post('/painel_admin/acao/atualizar_tipoarea',(req,res)=>{
+   aplicacao.app.controllers.TipoAreaController.atualizar_tipoarea(aplicacao, req, res);
+})
 }
