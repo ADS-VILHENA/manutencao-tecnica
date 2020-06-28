@@ -1,8 +1,11 @@
 var request = require('superagent');
 
 module.exports = (aplicacao) => {
-
-
+    //rota para imprimir dados do google planilha
+    aplicacao.get('/chamados_from_google', (req, res) => {
+       
+        aplicacao.app.controllers.ChamadoController.send_to_google_planilhas(aplicacao, req, res);
+    })
     //rota para visualizar a página inicial
     aplicacao.get('/', (req, res) => {
         let erros_submit = [];
