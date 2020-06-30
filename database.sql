@@ -31,7 +31,7 @@ CREATE TABLE `area` (
   `id_tipo_area` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_area`),
   KEY `fk_area_1_idx` (`id_tipo_area`),
-  CONSTRAINT `fk_area_1` FOREIGN KEY (`id_tipo_area`) REFERENCES `tipo_area` (`id_tipo_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_area_1` FOREIGN KEY (`id_tipo_area`) REFERENCES `tipo_area` (`id_tipo_area`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -59,8 +59,8 @@ CREATE TABLE `area_equipamento` (
   PRIMARY KEY (`id_area_equipamento`),
   KEY `fk_area_equipamento_1_idx` (`id_area`),
   KEY `fk_area_equipamento_2_idx` (`id_equipamento`),
-  CONSTRAINT `fk_area_equipamento_1` FOREIGN KEY (`id_area`) REFERENCES `area` (`id_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_area_equipamento_2` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_area_equipamento_1` FOREIGN KEY (`id_area`) REFERENCES `area` (`id_area`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_area_equipamento_2` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,7 +141,7 @@ CREATE TABLE `equipamento_problema` (
   `nome_problema` varchar(45) NOT NULL,
   PRIMARY KEY (`id_equipamento_problema`),
   KEY `fk_equipamento_problema_1_idx` (`id_equipamento`),
-  CONSTRAINT `fk_equipamento_problema_1` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_equipamento_problema_1` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -169,8 +169,8 @@ CREATE TABLE `equipamento_tipo_area` (
   PRIMARY KEY (`id_equipamento_tipo_area`),
   KEY `fk_equipamento_tipo_area_1_idx` (`id_equipamento`),
   KEY `fk_equipamento_tipo_area_2_idx` (`id_tipo_area`),
-  CONSTRAINT `fk_equipamento_tipo_area_1` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_equipamento_tipo_area_2` FOREIGN KEY (`id_tipo_area`) REFERENCES `tipo_area` (`id_tipo_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_equipamento_tipo_area_1` FOREIGN KEY (`id_equipamento`) REFERENCES `equipamento` (`id_equipamento`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_equipamento_tipo_area_2` FOREIGN KEY (`id_tipo_area`) REFERENCES `tipo_area` (`id_tipo_area`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
