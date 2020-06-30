@@ -8,14 +8,15 @@ const options = {
     cert: fs.readFileSync("config/certificados/cert.pem")
   };
 var app = require('./config/server');
-/*
-//executando com http
-app.listen(2525,()=>{
-    console.log('Servidor online na porta 2525!');
-})
-*/
 
+//executando com http
+app.listen(80,()=>{
+    console.log('Servidor online na porta 80!');
+})
+
+/*
 //executando com https
 https.createServer(options, app).listen(443,()=>{
     console.log("Servidor online em : https://localhost:443/")
 });
+*/
