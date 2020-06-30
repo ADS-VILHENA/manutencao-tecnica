@@ -86,6 +86,9 @@
                             <%if(id_equipamento.id_equipamento=='no_id'){%>
                                 <input id="id_equipamento"  name="id_equipamento"   type="text" value="no_id"
                                 style="display: none;">
+                            <%}else if(dados_equipamento.id_equipamento !== ''){%>
+                                <input id="id_equipamento" name="id_equipamento"  type="text" value="<%=dados_equipamento.id_equipamento%>"
+                                style="display: none;">
                             <%}else{%>
                                 <input id="id_equipamento" name="id_equipamento"  type="text" value="<%=id_equipamento.id_equipamento%>"
                                 style="display: none;">
@@ -110,7 +113,7 @@
 
                         <!-- aqui serão exibidas os problemas cadastrados, tavel colocar um comando for para puxar do BD -->
 
-                        <a id="adicionar" class="float-right  btn btn-link " style="margin-top: 6px;"><img
+                        <a id="adicionar" class="float-right  btn btn-link " style="margin-top: 6px;" onclick="adicionar_problema(<%=dados_equipamento.id_equipamento%>)"><img
                                 src="../../images/icons8-adicionar-48.png " width="40px" height="40px"></a>
                         <input id="novo_problema" type="text" class="small form-control bg-light col-9 mt-4"
                             placeholder="Adicionar novo problema">
@@ -125,18 +128,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                               
+                               <% if (problemas.length > 0){%>
+                               
+                                <%for(var i = 0; i < problemas.length; i++){%>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td><input type="text" id="problema" name="problema[]" value="Problema A"></td>
-                                    <td> <a onclick="remove(this)" class="btn btn-link"><img
+                                    <th scope="row"><%=problemas[i].id_equipamento_problema%></problemas></th>
+                                    <td><input type="text" id="problema" name="problema[]" value="<%= problemas[i].nome_problema%>"></td>
+                                    <td> <a href="/painel_admin/deletar_problema_by_id?id_equipamento=<%=dados_equipamento.id_equipamento%>&id_problema=<%=problemas[i].id_equipamento_problema%>" class="btn btn-link"><img
                                                 src="../../images/remover.png " width="35px" height="35px"></a></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td><input type="text" id="problema" name="problema[]" value="Problema B"></td>
-                                    <td> <a onclick="remove(this)" class="btn btn-link "><img
-                                                src="../../images/remover.png " width="35px" height="35px"></a></td>
-                                </tr>
+                                <%}%>
+                                <%}%>
                             </tbody>
                         </table>
 
@@ -167,18 +169,20 @@
     <script type="text/javascript">
 
         $("#adicionar").click(function () {
-            let problema = document.getElementById("novo_problema").value;
+           
 
-            var linha = "<tr>";
-            linha += '<td>' + '</td>';
-
-            linha += '<td><input type="text" id="problema_novo" name="problema_novo[]" value="Problema A"></td>';
-            linha += '<td><a onclick="remove(this)" class="btn btn-link"><img src="../../images/remover.png " width="35px" height="35px" ></a></td>'
-            linha += '</tr>';
-
-            $("#tabela_equipamentos").append(linha);
         });
 
+
+        function adicionar_problema(id_equipamento){
+            let nome_problema = document.getElementById("novo_problema").value;
+            if(nome_problema==""){
+                alert('Favor adicionar o problema!');
+            }else{
+                window.location.href = '/painel_admin/adcionar_problema_by_id?id_equipamento='+id_equipamento+'&nome_problema='+nome_problema ;
+            }
+            
+        }
         (function ($) {
             remove = function (item) {
                 var tr = $(item).closest('tr').remove();
