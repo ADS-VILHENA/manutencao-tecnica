@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Kaushan+Script|Rubik+Mono+One|Salsa&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Cadastrar Área</title>
+</head>
+<!-- Modal -->
+<div class="modal fade" id="cadastro_de_area" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloModalCentralizado">Deletar item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger">Deletar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<body id="cadastro_area">
+    <header>
+        <div class="h-100">
+            <!--retirar classe container-fluid -->
+            <div class="row form-cadastro justify-content-center ">
+                <div class="col-md-5 align-self-center area-form">
+                    <div>
+                        <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cadastrar
+                            Área</h1>
+                    </div>
+                    <img src="../../images/fabrica-manutencao-logo 2.png" class="float-right mr-1"
+                        style="margin-top: -60px;" height="auto" width="50px">
+                    <div class="dropdown">
+                        <button class="btn bg-success" style="margin-top: -105px;" type="button"
+                            data-toggle="dropdown"><img src="../../images/image 1.png" class="float-left mt-1 mr-1"
+                                height="auto" width="50px">
+                        </button>
+                        <ul class="dropdown-menu"
+                            style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;font-family:Roboto;">
+                            <li><a style="color: white; margin-top: 10px;" href="index.html">Início</a></li>
+                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_area.html">Cadastrar Área</a>
+                            </li>
+                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_equipamento.html">Cadastrar
+                                    Equipamento</a></li>
+                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_tipo_area.html">Cadastrar
+                                    tipo de área</a></li>
+                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_area.html">Pesquisar área
+                            </li>
+                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_equipamento.html">Pesquisar
+                                    Equipamento</a></li>
+                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_tipo_area.html">Pesquisar
+                                    tipo de área</a></li>
+                            <li><a style="color: white; margin-top: 10px;" href="#">Sair</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container-fluid h-100">
+            <div class="row form-cadastro justify-content-center ">
+                <div class="col-md-5 align-self-center area-form">
+                    <div>
+
+                        <h1 class="small d-block text-right" style="margin-top: -30px;font-size: 20px;">Gerar QR Code
+                        </h1>
+                        <input id="id_area" value="<%=dados_area.id_area%>" type="text"
+                            class="form-control bg-light col-3 mt-4" style="display:none;">
+                        <button class="float-right btn btn-link"><img src="../../images/QRcode.png" class="float-right"
+                                alt="qr" style="margin-top: -50px;margin-right: 35px;" height="50px"
+                                width="50px"></button>
+                    </div>
+                    <div>
+                        <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Nome da Área</h1>
+                        <input id="nome" type="text" value="<%=dados_area.nome_area%>"
+                            class="form-control bg-light mt-4">
+                    </div>
+                    <div>
+                        <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Descrição da Área</h1>
+                        <textarea class="form-control bg-light" rows="3"><%=dados_area.descricao_area%></textarea>
+                        <!-- aqui serão exibidas as áreas cadastradas, tavel colocar um comando for ou while para puxar do BD -->
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-warning mt-4">Atualizar Area</button>
+                    </div>
+                    <div>
+                        <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;" style="font-size: 20px;">
+                            Equipamentos: </h1>
+                        <%for(var i=0; i < equipamentos_da_area.length; i++){%>
+                        <div>
+                            <input type="text" class="form-control bg-light mt-3 col-9"
+                                value="<%=equipamentos_da_area[i].nome_equipamento%>" readonly>
+                            <a href="/painel_admin/deletar_area_equipamento/<%=dados_area.id_area%>?id_area_equipamento=<%=equipamentos_da_area[i].id_area_equipamento%>"><button class="float-right btn btn-link" style="margin-top: -42px;" data-toggle="modal"
+                                data-target="#cadastro_de_area"><img src="../../images/remover.png " width="35px"
+                                    height="35px" style="margin-right: -11px;"></button></a>
+                            <button class="float-right btn btn-link" style="margin-top: -8px;"><img
+                                    src="../../images/miniQR.png" width="35px" height="35px"
+                                    style="margin-top: -35px; margin-right:-15px" class="float-right "></button>
+                        </div>
+                        <%}%>
+                            
+                        
+                        <div>
+                            <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;" style="font-size: 20px;">
+                                Adicionar equipamento</h1>
+                        </div>
+                        <div>
+                            <a href="/painel_admin/cadastrar_equipamentos">
+                                <h1 class="small d-block text-left ml-0 mt-4">Adicionar equipamento</h1>
+                            </a>
+                            <input type="text" class="form-control bg-light col-9" placeholder="Busque o equipamento"
+                                id="nome_equipamento">
+                            
+                                <a id="pesquisar_equipamento" onclick="listar_equipamentos(<%= dados_area.id_area %>)"><button
+                                    class="float-right ml-0 btn btn-link"><img src="../../images/a.png" width="30px"
+                                        height="30px" style="margin-top: -40px; margin-right:-50px;"
+                                        class="float-right "></button></a>
+
+                            <table class="table" name="tabela_equipamentos" id="tabela_equipamentos">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Equipamento</th>
+                                        <th scope="col">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                   <%for(var i = 0; i < dados_equipamento_busca_por_termo.length;i++){%>
+                                    <tr>
+                                        <th scope="row"><%=dados_equipamento_busca_por_termo[i].id_equipamento%></problemas>
+                                        </th>
+                                        <td><input type="text" id="problema" name="problema[]"
+                                                value="<%=dados_equipamento_busca_por_termo[i].nome_equipamento%>"></td>
+                                        <td> 
+                                            <a class="btn btn-link" onclick="adicionar_equipamentos(<%=dados_equipamento_busca_por_termo[i].id_equipamento%>,<%= dados_area.id_area %>)">
+                                        
+                                        <img src="../../images/icons8-adicionar-48.png " width="35px"
+                                                    height="35px" >
+                                                
+                                                </a>
+                                                
+                                                </td>
+                                    <%}%>
+                                    
+                                     
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- aqui serão exibidos os problemas que ja foram cadastrados, somente leitura-->
+                    <div>
+                      <a href="/painel_admin/pesquisar_areas"> <button class="btn btn-success mt-5">Pesquisar áreas</button></a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script>
+    function listar_equipamentos(id_area){
+            let termo_busca = document.getElementById("nome_equipamento").value;
+            if(termo_busca==""){
+                alert('Favor adicionar o nome do equipamento!');
+            }else{
+                window.location.href = '/painel_admin/atualizar_area_by_id/'+id_area+'?termo_busca_equipamento='+termo_busca;
+            }
+            
+        }
+        function adicionar_equipamentos(id_equipamento,id_area){
+    
+           let link = '/painel_admin/adcionar_problema_by_id?id_equipamento='+id_equipamento+'&id_area='+id_area;
+                window.location.href = link;
+          
+        
+        }
+</script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
