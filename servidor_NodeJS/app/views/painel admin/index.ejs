@@ -6,38 +6,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Arima+Madurai|Kaushan+Script|Rubik+Mono+One|Salsa&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title>cadastro tipo de área</title>
+        <title>SupQr</title>
     </head>
-     <!-- Modal -->
-    <div class="modal fade" id="cadastro_tipo_de_area" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="TituloModalCentralizado">Deletar item</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-danger">Deletar</button>
-            </div>
-        </div>
-        </div>
-    </div>
     
-    <body id="cadastro_area">
+    
+    <body id="index">
         <header >
             <div class="h-100"> <!--retirar classe container-fluid -->
                 <div class="row form-cadastro justify-content-center ">
-                    <div class="col-md align-self-center area-form">
+                    <div class="col-md-5 align-self-center area-form">
                         <div>
-                            <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cadastro Tipo de Área</h1>
+                            <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Painel de Controle</h1>
                         </div >
-                        <img src="../images/fabrica-manutencao-logo 2.png" class="float-right mr-1" style="margin-top: -60px;" height="auto" width="50px">
+                        <img src="../../servidor_NodeJS/app/public/images/fabrica-manutencao-logo 2.png" class="float-right mr-1" style="margin-top: -60px;" height="auto" width="50px">
                         <div class="dropdown">
-                            <button class="btn bg-success" style="margin-top: -105px;"  type="button" data-toggle="dropdown"><img src="../images/image 1.png" class="float-left mt-1 mr-1" height="auto" width="50px">
+                            <button class="btn bg-success" style="margin-top: -105px;"  type="button" data-toggle="dropdown"><img src="../../servidor_NodeJS/app/public/images/image 1.png" class="float-left mt-1 mr-1" height="auto" width="50px">
                             </button>
                             <ul class="dropdown-menu" style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;font-family:Roboto;" >
                                 <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/index">Início</a></li></routerLink>
@@ -57,25 +40,19 @@
         <main>
             <div class="container-fluid h-100">
                 <div class="row form-cadastro justify-content-center ">
-                    <div class="col-md-7 align-self-center area-form">        
+                    <div class="col-md-5 align-self-center area-form">        
                         <div>
-
-                            <form id="formulario_equipamento" action="/painel_admin/acao/salvar_tipoarea" method="post"
-                            enctype="multipart/form-data">
-
-                            <h1 class="small d-block text-left ml-0 mt-4"> Cadastro Tipo de área: </h1>
-                            <input type="text" class="form-control bg-light">
-                            <h1 class="small d-block text-left ml-0 mt-4">Descrição do Tipo</h1>
-                            <textarea class="form-control bg-light" rows="3"></textarea>
+                            <img src="../../servidor_NodeJS/app/public/images/fabrica-manutencao-logo 2.png" class="mx-auto d-block mt-5" height="auto" width="120px" >
+                            <h1 class="mx-auto text-center mt-2" style="font-size:30px; font-family: Orbiton;" ><B>Agilizando seus <br> chamados</h1></B>
                         </div>
                         <div>
-                           
-
-                        </div>   
+                            <!-- aqui serão exibidas o total de chamadas, tavel colocar uma funçao com comando while ou for para puxar do BD -->
+                            <h1 class="mx-auto text-center mt-5" style="font-size:20px; font-family: Orbiton;" >Total de chamados</h1>
+                            <input type="text" class="form-control bg-light mt-2 col-4 mx-auto d-block"  readonly>
+                        </div>    
                         <div>
-                            <button id="enviar" class="btn btn-success mt-5">Enviar</button>
+                            <h1 class="mx-auto text-center mt-5" style="font-size:20px; font-family: Orbiton;">CHAMADOS POR ORIGEM</h1>
                         </div>
-                        </form> 
                     </div>
                 </div>
             </div>
@@ -93,32 +70,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
-            <script type="text/javascript">
-
-                $("#adicionar").click(function () {
-                    let problema = document.getElementById("novo_problema").value;
-        
-                    var linha = "<tr>";
-                    linha += '<td>' + '</td>';
-        
-                    linha += '<td><input type="text" id="problema_novo" name="problema_novo[]" value="Problema A"></td>';
-                    linha += '<td><a onclick="remove(this)" class="btn btn-link"><img src="../images/remover.png " width="35px" height="35px" ></a></td>'
-                    linha += '</tr>';
-        
-                    $("#tabela_equipamentos").append(linha);
-                });
-        
-                (function ($) {
-                    remove = function (item) {
-                        var tr = $(item).closest('tr').remove();
-                    }
-                })(jQuery);
-        
-              
-        
-            
-            </script>
-
 </body>
 
 </html>
