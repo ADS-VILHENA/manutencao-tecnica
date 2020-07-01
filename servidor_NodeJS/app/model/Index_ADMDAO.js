@@ -1,7 +1,7 @@
-function IndexDAO(conexao) {
+function Index_ADMDAO(conexao) {
     this._conexao = conexao;
 }
 
 module.exports = () => {
-    return IndexDAO;
+    return Index_ADMDAO;
 }
