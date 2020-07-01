@@ -137,4 +137,13 @@ aplicacao.post('/painel_admin/acao/salvar_tipoarea', (req, res) => {
 aplicacao.post('/painel_admin/acao/atualizar_tipoarea',(req,res)=>{
    aplicacao.app.controllers.TipoAreaController.atualizar_tipoarea(aplicacao, req, res);
 })
+/**-----------------------------------Rota Index------------------------------------------- */
+aplicacao.get('/painel_admin/index', (req, res) => {
+    aplicacao.app.controllers.Index_ADMController.visualizar_index(aplicacao, req, res);
+ })
+
+ /*login*/
+ aplicacao.get('/painel_admin/', (req, res) => {
+    aplicacao.app.controllers.loginController.visualizar_login(aplicacao, req, res);
+ })
 }
