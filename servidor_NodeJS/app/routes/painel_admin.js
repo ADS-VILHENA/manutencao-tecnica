@@ -47,9 +47,9 @@ aplicacao.get('/painel_admin/deletar_problema_by_id',(req,res)=>{
 aplicacao.get('/painel_admin/adcionar_problema_by_id',(req,res)=>{
 
     let id_equipamento = req.query.id_equipamento;
-    let id_area = req.query.id_area;
+    let nome_problema = req.query.nome_problema;
     
-   aplicacao.app.controllers.AreaController.adicionar_equipamento_na_area(aplicacao, req, res, id_equipamento,id_area);
+   aplicacao.app.controllers.EquipamentoController.adicionar_equipamento_by_id(aplicacao,req,res,id_equipamento,nome_problema);
 })
 
 //---------------------------------------------------
