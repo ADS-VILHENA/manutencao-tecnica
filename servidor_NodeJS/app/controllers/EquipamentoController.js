@@ -10,19 +10,17 @@ module.exports.visualizar_listar_equipamentos = (aplicacao, req, res,termo)=>{
         res.render("painel admin/pesquisar_equipamento",{equipamentos}) ;
     })
 }
-
 module.exports.visualizar_cadastrar_equipamentos = (aplicacao, req, res)=>{
   let erros = {};
+  problemas = {};
   res.render("painel admin/cadastrar_equipamento",{erros});
+
 }
 module.exports.visualizar_atualizar_equipamentos = (aplicacao, req, res,id_equipamento)=>{
   let erros = {};
   let id;
   res.render("painel admin/atualizar_equipamento",{erros});
 }
-
-
-
 module.exports.atualizar_equipamento = (aplicacao, req, res)=>{
   
   let equipamento = {
@@ -54,8 +52,6 @@ module.exports.atualizar_equipamento = (aplicacao, req, res)=>{
 });
 
 }
-
-
 module.exports.salvar_equipamento = function(aplicacao,req,res){
   var conexao = aplicacao.config.db;
   var equipamento_model = new aplicacao.app.model.EquipamentoDAO(conexao);
@@ -64,10 +60,17 @@ module.exports.salvar_equipamento = function(aplicacao,req,res){
   equipamento_model.salvar_equipamento(equipamento, (requisicao, result) => {
     let id_inserido =  result.insertId;
     let erros = {};
-    let dados_equipamento = {nome_equipamento:req.body.nome_equipamento,descricao_equipamento:req.body.descricao_equipamento};
-    let id_equipamento = {id_equipamento:id_inserido}
+    let problemas = {};
     
-    res.render("painel admin/atualizar_equipamento",{erros,id_equipamento,dados_equipamento});
+    let id_equipamento = {id_equipamento:id_inserido}
+    console.log(result);
+    if(result.affectedRows == 1){
+      let dados_equipamento = {nome_equipamento:req.body.nome_equipamento,descricao_equipamento:req.body.descricao_equipamento,id_equipamento:result.insertId};
+      res.render("painel admin/atualizar_equipamento",{erros,id_equipamento,dados_equipamento,problemas});
+    }else{
+      console.log("log --> algo deu errado e não conseguiu inserir o equipamento")
+    }
+    
       
   });
 }
@@ -85,7 +88,6 @@ module.exports.deletar_problema_by_id = (aplicacao,req,res,id_problema,id_equipa
   })
 
 }
-
 module.exports.deletar_equipamento_by_id = (aplicacao,req,res,id_equipamento)=>{
  
   var conexao = aplicacao.config.db;
@@ -103,7 +105,6 @@ module.exports.deletar_equipamento_by_id = (aplicacao,req,res,id_equipamento)=>{
   })
   
 }
-
 module.exports.adicionar_equipamento_by_id = (aplicacao,req,res,id_equipamento,nome_problema)=>{
  
   var conexao = aplicacao.config.db;
@@ -118,8 +119,6 @@ module.exports.adicionar_equipamento_by_id = (aplicacao,req,res,id_equipamento,n
   })
 
 }
-
-
 module.exports.atualizar_equipamento_by_id = function (aplicacao, req,res, id_equipamento){
   var conexao = aplicacao.config.db;
   var equipamento_model = new aplicacao.app.model.EquipamentoDAO(conexao);
