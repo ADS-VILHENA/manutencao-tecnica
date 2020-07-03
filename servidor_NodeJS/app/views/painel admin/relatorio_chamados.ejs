@@ -85,7 +85,7 @@
             </div>
         </div>
     </header>
-<div style="padding: 5%;">
+<div class = "container">
     <main>
         <h1 class="pb-4">Relatório de Chamados</h1>
         <table class="table table-striped">
@@ -97,37 +97,48 @@
                 <th scope="col">Equipamento</th>
                 <th scope="col">Area</th>
                 <th scope="col">CPF</th>
+                <th scope="col">Anexo</th>
+
 
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+               
+            <%for(var i = 0; i < chamados.length; i++){%>
+                <tr>
+                <th scope="row"><%=chamados[i].id_chamado%></th>
+                <td><%=chamados[i].descricao%></td>
+                <td><%=chamados[i].problema%></td>
+                <td><%=chamados[i].equipamento%></td>
+                <td><%=chamados[i].area%></td>
+                <td><%=chamados[i].cpf_usuario%></td>
+                <%if(chamados[i].path_anexo!=""){%>
+                    <td><a href="/download/<%=chamados[i].path_anexo%>" ><button type="button" class="btn btn-info">Anexo</button></a></td>
+                    <%}else{%>
+                    <td><a href="" ></a></td>
+                   <%}%>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              <%}%>
             </tbody>
           </table>
           <nav aria-label="Navegação de página exemplo">
             <ul class="pagination">
-              <li class="page-item"><a class="page-link text-dark" href="#">Anterior</a></li>
-              <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
-              <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-              <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-              <li class="page-item"><a class="page-link text-dark" href="#">Próximo</a></li>
+              <%if(qtde_paginas.pagina == 0){%>
+                <li class="page-item"><a class="page-link text-dark" href="/painel_admin/listar_chamados?page=0>">Anterior</a></li>
+                <%}else{%>
+                    <li class="page-item"><a class="page-link text-dark" href="/painel_admin/listar_chamados?page=<%=qtde_paginas.pagina-1%>">Anterior</a></li>
+                    <%}%>
+              
+                <%for(var i = qtde_paginas.pagina; i<qtde_paginas.qtde_paginas; i++){%>
+              <li class="page-item"><a class="page-link text-dark" href="/painel_admin/listar_chamados?page=<%=i%>"><%=i+1%></a></li>
+              <%}%>
+
+              <%if(qtde_paginas.qtde_paginas==qtde_paginas.pagina+1){%>
+                <li class="page-item"><a class="page-link text-dark" href="/painel_admin/listar_chamados?page=<%=qtde_paginas.pagina%>">Próximo</a></li>
+            <%}else{%>
+                <li class="page-item"><a class="page-link text-dark" href="/painel_admin/listar_chamados?page=<%=qtde_paginas.pagina+1%>">Próximo</a></li>
+                <%}%>
+             
             </ul>
           </nav>
 

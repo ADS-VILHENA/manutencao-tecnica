@@ -51,7 +51,14 @@ aplicacao.get('/painel_admin/adcionar_problema_by_id',(req,res)=>{
     
    aplicacao.app.controllers.EquipamentoController.adicionar_equipamento_by_id(aplicacao,req,res,id_equipamento,nome_problema);
 })
+aplicacao.get('/painel_admin/adcionar_equipamento_by_id',(req,res)=>{
 
+    let id_equipamento = req.query.id_equipamento;
+    let id_area = req.query.id_area;
+    
+    
+   aplicacao.app.controllers.AreaController.adicionar_equipamento_na_area(aplicacao,req,res,id_equipamento,id_area);
+})
 //---------------------------------------------------
 
 //rotas para area
@@ -109,9 +116,6 @@ aplicacao.get('/painel_admin/deletar_area_equipamento/:id',(req,res)=>{
 })
 
 
-
-
-
 //---------------------------------------------------
 // rotas tipo_area
 //rota para listar tipos de area painel admin
@@ -145,5 +149,15 @@ aplicacao.get('/painel_admin/index', (req, res) => {
  /*login*/
  aplicacao.get('/painel_admin/', (req, res) => {
     aplicacao.app.controllers.loginController.visualizar_login(aplicacao, req, res);
+ })
+
+//---------------------------------------------------
+// rotas chamado
+//rota para listar tipos de area painel admin
+aplicacao.get('/painel_admin/listar_chamados', (req, res) => {
+    let page = req.query.page;
+    if(page==undefined){page=0}
+    page=parseInt(page);
+    aplicacao.app.controllers.ChamadoController.visualizar_listar_chamados(aplicacao, req, res,page);
  })
 }
