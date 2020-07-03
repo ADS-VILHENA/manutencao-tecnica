@@ -29,7 +29,7 @@ module.exports = (aplicacao) => {
         if (isNumber(id) == true) {
             if (identificador == "A") {
                 //vai realizar as buscas de área e redenrizar o formulário com informações
-                console.log("vai construir area")
+                //console.log("vai construir area")
                 aplicacao.app.controllers.ChamadoController.buscar_info_QRCodeArea(aplicacao, req, res, id);
             } else if (identificador == "E") {
                 //vai realizar as buscas de área e redenrizar o formulário com informações

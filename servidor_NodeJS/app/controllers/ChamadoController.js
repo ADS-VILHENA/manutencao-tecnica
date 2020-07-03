@@ -54,13 +54,17 @@ module.exports.salvar_chamado = (app, req, res, chamado) => {
     const promise = new Promise((resolve, reject) => {
 
         var conexao = app.config.db;
-        var noticia_model = new app.app.model.ChamadoDAO(conexao);
+        var equipamento_model = new app.app.model.ChamadoDAO(conexao);
+        
 
-        noticia_model.salvar_chamado(chamado, (req, res) => {
-            console.log(res);
-            resolve(0);
+       
+           
+            equipamento_model.salvar_chamado(chamado, (req, res) => {
+                console.log(res);
+                resolve(0);
+            
         })
-
+       
     });
     return promise;
 }
@@ -143,8 +147,20 @@ module.exports.buscar_info_QRCodeArea = (aplicacao, req, resposta, codigo) => {
 
         //vai verificar se o retorno do banco é vazio, se for vazio volta o home
         if (res.length < 1) {
-            let erros_submit = [];
+            
+            noticia_model.buscar_area_by_id(id_qrcode, (req, result_area) => {
+            //console.log(result_area);
+            let resposta_banco = result_area;
+            if(resposta_banco==undefined || resposta_banco.length < 1){
+            erros_submit={}
             this.visualizar_home(aplicacao, req, resposta, { erro: 1 }, erros_submit)
+            }else{
+            //console.log(resposta);
+            let erros_submit = [];
+            this.visualizar_formulario(aplicacao, req, resposta, result_area,{ erro: 0 }, erros_submit)
+            }
+            })
+            
         } else {
             //se o retorno do banco não for vazio vai chamar o formulario
             console.log(res);
@@ -197,12 +213,21 @@ module.exports.enviar_chamado = (app, req, res) => {
     var path = require("path")
     let name = uuidv4();
     //definindo o path do arquivo
-    var file = req.files.upfile;
-    let tipo = file.name.toString().split(".");
-
-    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name + "."+tipo[1];
+    
+    let tipo;
+    if(req.files!=null){
+        let file = req.files.upfile;
+        tipo = file.name.toString().split(".");
+        name = name+"."+tipo[1];
+        console.log("Tem anexo!!!!!!!!!!")
+    }else{
+        name = "";
+    }
+   
+    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name;
 
     let enviar_arquivo = this.enviar_arquivo(app, req, res, uploadpath);
+    console.log(name);
     let chamado = {
         path_anexo: name,
         descricao: req.body.descricao,
@@ -211,6 +236,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         area: req.body.area,
         cpf_usuario: req.body.cpf_usuario
     }
+   
 
     let erros = [{
         upload: "",
@@ -218,6 +244,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         googleForms: "",
         banco: ""
     }]
+
     enviar_arquivo
         .then(
             //imprimi o resultado do upload do arquivo 1 = ERRO; 0 = SUCESSO; 
@@ -265,7 +292,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         }).then(() => {
 
             var data = new Date();
-
+        /*
             let chamado = {
                 data: data.getDate,
                 descricao: req.body.descricao,
@@ -275,6 +302,7 @@ module.exports.enviar_chamado = (app, req, res) => {
                 cpf: req.body.cpf_usuario,
                 anexo: "https://192.168.8.109:2525/download/" + name +"."+tipo[1]
             }
+        */
             app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado);
 
         }, () => {
@@ -303,4 +331,21 @@ module.exports.download_arquivo = (app, req, res, name) => {
 
     var filestream = fs.createReadStream(file);
     filestream.pipe(res);
+}
+
+module.exports.visualizar_listar_chamados = (app, req, res, page)=>{
+    var conexao = app.config.db;
+    var equipamento_model = new app.app.model.ChamadoDAO(conexao);
+
+    equipamento_model.listar_chamados(page, (req, result) => {
+        let chamados = result;
+        equipamento_model.quantidade_chamados((req,result_qtde)=>{
+        let qtde_chamados = result_qtde[0];
+        //console.log(Math.trunc(1));
+        let qtde_paginas = {qtde_paginas : Math.trunc(qtde_chamados.qtde_chamados/10)+1,
+                            pagina:page};
+        console.log(qtde_paginas);
+        res.render('painel admin/relatorio_chamados.ejs',{chamados,qtde_paginas});
+        })
+    })
 }
