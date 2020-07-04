@@ -85,10 +85,12 @@
                             <%}%>
                            
 
-                            <h1 class="small d-block text-left ml-0 mt-4">Nome do equipamento:</h1>
+                            <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;">Nome do equipamento:</h1>
                             <input id="nome_equipamento" type="text" name="nome_equipamento"
                                 class="form-control bg-light" value = "<%=dados_equipamento.nome_equipamento%>">
+
                             <h1 class="small d-block text-left ml-0 mt-4">Descrição do Equipamento:</h1>
+
                             <textarea id="descricao_equipamento" name="descricao_equipamento"
                                 class="form-control bg-light" rows="3" value=""><%=dados_equipamento.descricao_equipamento%></textarea>
                             <button type="submit" class="btn btn-warning mt-4">Atualizar equipamento</button>
@@ -99,7 +101,7 @@
 
 
 
-                        <h1 class="small d-block text-left ml-0 mt-4">Problemas do Equipamento:</h1>
+                        <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Problemas do Equipamento:</h1>
 
                         <!-- aqui serão exibidas os problemas cadastrados, tavel colocar um comando for para puxar do BD -->
 
@@ -136,7 +138,7 @@
             </div>
         </div>
     </main>
-    <footer style="position: fixed;bottom: 0; left: 0;right: 0;">
+    <footer style="position: relative;bottom: 0; left: 0;right: 0;">
         <div class="h-100 ml-0 mt-4">
             <div class="row justify-content-center ">
                 <div class="col-md align-self-center" style="background-color: #f5f3f0; padding: 10px;">
