@@ -240,6 +240,19 @@ module.exports.enviar_chamado = (app, req, res) => {
         area: req.body.area,
         cpf_usuario: req.body.cpf_usuario
     }
+    var hoje = new Date();
+    let chamado_mail = {
+        data: hoje.getDate() + " - " + hoje.getMonth() + " - " + hoje.getFullYear(),
+        descricao: req.body.descricao,
+        problema: req.body.problema,
+        equipamento: nome_equipamento[1],
+        area: req.body.area,
+        cpf: req.body.cpf_usuario,
+        anexo: ""
+    }
+    if(name!=""){
+       chamado_mail.anexo = "https://manutencao.adsvilhena.ninja/download/" +name;
+    }
 
 
     let erros = [{
@@ -280,12 +293,17 @@ module.exports.enviar_chamado = (app, req, res) => {
         })
         .then((resultado) => {
             erros.googleForms = resultado;
+           
+            
+            
             const mailOptions = {
                 from: 'supqr.ifro@gmail.com', // sender address
                 to: 'supqr.ifro@gmail.com', // list of receivers
                 subject: 'Abertura de Chamado - ' + req.body.area, // Subject line
-                html: "<html><head></head><body><p>Descricao:<p></br><p>{{ " + req.body.descricao + " }}<p><p>Problema:<p></br><p>" + req.body.problema + "<p><p>Equipamento:<p></br><p>" + req.body.equipamento + "<p><p>Area:<p></br><p>" + req.body.area + "<p><p>CPF:<p></br><p>" + req.body.cpf_usuario + "<p><p>Anexo:<p></br><p>http://localhost:2020/download/" + name + "<p></body></html>"
+                html: "<html><head></head><body><p>Descricao:<p></br><p>{{ " + chamado_mail.descricao + " }}<p><p>Problema:<p></br><p>" + chamado_mail.problema + "<p><p>Equipamento:<p></br><p>" + chamado_mail.equipamento + "<p><p>Area:<p></br><p>" + chamado_mail.area + "<p><p>CPF:<p></br><p>" + chamado_mail.cpf + "<p><p>Anexo:<p></br><p>" + chamado_mail.anexo + "<p></body></html>"
             };
+            //console.log(chamado_mail);
+            
             return app.app.controllers.EmailController.enviar_email(req, res, mailOptions);
         })
 

@@ -22,7 +22,7 @@ module.exports.enviar_email = (req,res, mailOptions)=>{
       transporter.sendMail(mailOptions, function (err, info) {
         if(err){
           console.log(err)
-          //res.send("Erro ao enviar email");
+          res.send("Erro ao enviar email");
           resolve (1);
           
         }
