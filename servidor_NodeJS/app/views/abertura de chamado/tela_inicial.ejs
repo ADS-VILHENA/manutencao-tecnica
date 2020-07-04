@@ -66,6 +66,12 @@
 
                                         }
                                     );
+                                     let scanner_for_pc = new Instascan.Scanner(
+                                        {
+                                            video: document.getElementById('preview'),
+                                        
+                                        }
+                                    );
 
                                     scanner.addListener('scan', function (content) {
                                         content = content.toString();
