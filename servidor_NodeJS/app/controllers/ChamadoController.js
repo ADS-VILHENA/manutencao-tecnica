@@ -2,10 +2,12 @@
 
 module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
 
+    console.log(chamado);
+
     const promise = new Promise((resolve, reject) => {
         const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-        async function accessSpreadsheet() {
+        async function accessSpreadsheet(chamadoge) {
             // spreadsheet key is the long id in the sheets URL
             const doc = new GoogleSpreadsheet('18nnEYqZigMsBaunFAU6od_j4yMyYzzO1_DKeV4kE_AI');
             const creds = require('../../config/Google Planilhas - SupQR-95575613a5f8.json');
@@ -20,12 +22,12 @@ module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
             //doc.useApiKey('YOUR-API-KEY');
 
             await doc.loadInfo(); // loads document properties and worksheets
-            console.log(doc.title);
+            //console.log(doc.title);
             //await doc.updateProperties({ title: 'renamed doc' });
 
             const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-            console.log(sheet.title);
-            console.log(sheet.rowCount);
+            //console.log(sheet.title);
+            //console.log(sheet.rowCount);
 
             // adding / removing sheets
             //const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
@@ -33,13 +35,13 @@ module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
 
 
             //adicionando uma linha no googlesheets
-            const nova_linha = await sheet.addRow(chamado, (req, res) => {
+            const nova_linha = await sheet.addRow(chamadoge, (req, res) => {
                 resolve(0);
             });
 
 
         }
-        accessSpreadsheet();
+        accessSpreadsheet(chamado);
 
     });
     return promise;
@@ -60,7 +62,7 @@ module.exports.salvar_chamado = (app, req, res, chamado) => {
        
            
             equipamento_model.salvar_chamado(chamado, (req, res) => {
-                console.log(res);
+               // console.log(res);
                 resolve(0);
             
         })
@@ -75,13 +77,13 @@ module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
     const promise = new Promise((resolve, reject) => {
 
         if (req.files == null) {
-            console.log("Não há arquivos para fazer upload!");
+           // console.log("Não há arquivos para fazer upload!");
             resolve(1);
         } else {
             if (req.files.upfile) {
                var file = req.files.upfile;
                let tipo = file.name.toString().split(".");
-               console.log(tipo);
+             //  console.log(tipo);
              //  uploadpath = uploadpath+"."+tipo[1];
                 // var type = req.files.upfile.name.split(".");
                 //uploadpath = uploadpath+"."+type[1];
@@ -94,19 +96,19 @@ module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
                 file.mv(uploadpath, function (err) {
                     if (err) {
                         resultado = 1;
-                        console.log("Erro ao enviar os documentos!");
+                       // console.log("Erro ao enviar os documentos!");
                         resolve(1);
                     }
                     else {
                         resultado = 0;
-                        console.log("Update realizado com sucesso!");
+                        //console.log("Update realizado com sucesso!");
                         resolve(0);
                     }
 
                 });
             }
             else {
-                console.log("Erro ao enviar arquivos!")
+               // console.log("Erro ao enviar arquivos!")
                 resultado = 0;
                 resolve(1);
             };
@@ -163,7 +165,7 @@ module.exports.buscar_info_QRCodeArea = (aplicacao, req, resposta, codigo) => {
             
         } else {
             //se o retorno do banco não for vazio vai chamar o formulario
-            console.log(res);
+           // console.log(res);
             let erros_submit = {};
             this.visualizar_formulario(aplicacao, req, resposta, res, erro, erros_submit);
         }
@@ -202,7 +204,7 @@ module.exports.visualizar_formulario = (app, req, res, dados_area_equipamento, e
     //console.log(dados_area_equipamento)
     //res.send(dados_area_equipamento)
     //1 houve erro, 0 não houve erro.
-    console.log(erros_submit);
+   // console.log(erros_submit);
     let result_erro = erro;
     res.render("abertura de chamado/formulario_abertura", { dados: dados_area_equipamento, erro: [], erros_submit })
 }
@@ -219,7 +221,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         let file = req.files.upfile;
         tipo = file.name.toString().split(".");
         name = name+"."+tipo[1];
-        console.log("Tem anexo!!!!!!!!!!")
+       // console.log("Tem anexo!!!!!!!!!!")
     }else{
         name = "";
     }
@@ -227,16 +229,18 @@ module.exports.enviar_chamado = (app, req, res) => {
     var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name;
 
     let enviar_arquivo = this.enviar_arquivo(app, req, res, uploadpath);
-    console.log(name);
+    //console.log(name);
+    let nome_equipamento = req.body.equipamento.split('~');
+    //console.log(nome_equipamento);
     let chamado = {
         path_anexo: name,
         descricao: req.body.descricao,
         problema: req.body.problema,
-        equipamento: req.body.equipamento,
+        equipamento: nome_equipamento[1],
         area: req.body.area,
         cpf_usuario: req.body.cpf_usuario
     }
-   
+
 
     let erros = [{
         upload: "",
@@ -287,23 +291,28 @@ module.exports.enviar_chamado = (app, req, res) => {
 
         .then((resultado) => {
             erros.email = resultado;
-            console.log(erros);
+            //console.log(erros);
             //res.end();
         }).then(() => {
 
-            var data = new Date();
-        /*
-            let chamado = {
-                data: data.getDate,
+            var now = new Date();
+            
+            let chamado_ge = {
+                data: now.getDate() + " - " + now.getMonth() + " - " + now.getFullYear(),
                 descricao: req.body.descricao,
                 problema: req.body.problema,
-                equipamento: req.body.equipamento,
+                equipamento: nome_equipamento[1],
                 area: req.body.area,
                 cpf: req.body.cpf_usuario,
-                anexo: "https://192.168.8.109:2525/download/" + name +"."+tipo[1]
+                anexo: ""
             }
-        */
-            app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado);
+            if(name!=""){
+               chamado_ge.anexo = "https://manutencao.adsvilhena.ninja/download/" +name;
+            }
+            
+          //  console.log(chamado_ge);
+        
+            app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado_ge);
 
         }, () => {
             console.log("Não enviou")
@@ -344,7 +353,7 @@ module.exports.visualizar_listar_chamados = (app, req, res, page)=>{
         //console.log(Math.trunc(1));
         let qtde_paginas = {qtde_paginas : Math.trunc(qtde_chamados.qtde_chamados/10)+1,
                             pagina:page};
-        console.log(qtde_paginas);
+       // console.log(qtde_paginas);
         res.render('painel admin/relatorio_chamados.ejs',{chamados,qtde_paginas});
         })
     })
