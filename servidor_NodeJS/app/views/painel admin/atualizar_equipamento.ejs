@@ -38,8 +38,7 @@
             <div class="row form-cadastro justify-content-center ">
                 <div class="col-md align-self-center area-form">
                     <div>
-                        <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cad.
-                            Equipamento</h1>
+                        <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cadastro de Equipamentos</h1>
                     </div>
                     <img src="../../images/fabrica-manutencao-logo 2.png" class="float-right mr-1"
                         style="margin-top: -60px;" height="auto" width="50px">
@@ -89,7 +88,9 @@
                             <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;">Nome do equipamento:</h1>
                             <input id="nome_equipamento" type="text" name="nome_equipamento"
                                 class="form-control bg-light" value = "<%=dados_equipamento.nome_equipamento%>">
-                            <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;">Descrição do Equipamento</h1>
+
+                            <h1 class="small d-block text-left ml-0 mt-4">Descrição do Equipamento:</h1>
+
                             <textarea id="descricao_equipamento" name="descricao_equipamento"
                                 class="form-control bg-light" rows="3" value=""><%=dados_equipamento.descricao_equipamento%></textarea>
                             <button type="submit" class="btn btn-warning mt-4">Atualizar equipamento</button>
@@ -104,13 +105,13 @@
 
                         <!-- aqui serão exibidas os problemas cadastrados, tavel colocar um comando for para puxar do BD -->
 
-                        <a id="adicionar" class="float-right  btn btn-link " style="margin-top: 6px;" onclick="adicionar_problema(<%=dados_equipamento.id_equipamento%>)"><img
-                                src="../../images/icons8-adicionar-48.png " width="40px" height="40px"></a>
-                        <input id="novo_problema" type="text" class="small form-control bg-light col-9 mt-4"
-                            placeholder="Adicionar novo problema">
+                        
+                        <boton id="adicionar" class="float-right  btn btn-success" onclick="adicionar_problema(<%=dados_equipamento.id_equipamento%>)">Adicionar</boton>
+                        <input id="novo_problema" type="text" class="small form-control bg-light col-9 mt-2"
+                            placeholder="Adicionar novo problema" >
+                        
 
-
-                        <table class="table" name="tabela_equipamentos" id="tabela_equipamentos">
+                        <table class="table" style="margin-top: 20px;" name="tabela_equipamentos" id="tabela_equipamentos">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -132,16 +133,7 @@
                                 <%}%>
                             </tbody>
                         </table>
-
-                      
-                    </div>
-
-                    <div>
-                        <a href="/painel_admin/pesquisar_equipamentos"><button id="enviar" class="btn btn-success" onclick=buscar_dados()>Buscar equipamentos</button></a>
-                    </div>
-                   
-                    
-
+                    </div>             
                 </div>
             </div>
         </div>
@@ -150,7 +142,7 @@
         <div class="h-100 ml-0 mt-4">
             <div class="row justify-content-center ">
                 <div class="col-md align-self-center" style="background-color: #f5f3f0; padding: 10px;">
-                    <p style="text-align: center;margin-bottom: 0px;">Desenvolvedores: Dhanielly, Evaldo, Jhoni, Juliano, Manoel </p>
+                    <p style="text-align: center;margin-bottom: 0px; font-size: x-small;">Desenvolvedores: Dhanielly, Evaldo, Jhoni, Juliano, Manoel </p>
             </div>
         </div>
     </footer>

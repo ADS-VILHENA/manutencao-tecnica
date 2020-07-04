@@ -2,10 +2,12 @@
 
 module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
 
+    console.log(chamado);
+
     const promise = new Promise((resolve, reject) => {
         const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-        async function accessSpreadsheet() {
+        async function accessSpreadsheet(chamadoge) {
             // spreadsheet key is the long id in the sheets URL
             const doc = new GoogleSpreadsheet('18nnEYqZigMsBaunFAU6od_j4yMyYzzO1_DKeV4kE_AI');
             const creds = require('../../config/Google Planilhas - SupQR-95575613a5f8.json');
@@ -20,12 +22,12 @@ module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
             //doc.useApiKey('YOUR-API-KEY');
 
             await doc.loadInfo(); // loads document properties and worksheets
-            console.log(doc.title);
+            //console.log(doc.title);
             //await doc.updateProperties({ title: 'renamed doc' });
 
             const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-            console.log(sheet.title);
-            console.log(sheet.rowCount);
+            //console.log(sheet.title);
+            //console.log(sheet.rowCount);
 
             // adding / removing sheets
             //const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
@@ -33,13 +35,13 @@ module.exports.send_to_google_planilhas = (app, req, res, chamado) => {
 
 
             //adicionando uma linha no googlesheets
-            const nova_linha = await sheet.addRow(chamado, (req, res) => {
+            const nova_linha = await sheet.addRow(chamadoge, (req, res) => {
                 resolve(0);
             });
 
 
         }
-        accessSpreadsheet();
+        accessSpreadsheet(chamado);
 
     });
     return promise;
@@ -54,13 +56,17 @@ module.exports.salvar_chamado = (app, req, res, chamado) => {
     const promise = new Promise((resolve, reject) => {
 
         var conexao = app.config.db;
-        var noticia_model = new app.app.model.ChamadoDAO(conexao);
+        var equipamento_model = new app.app.model.ChamadoDAO(conexao);
+        
 
-        noticia_model.salvar_chamado(chamado, (req, res) => {
-            console.log(res);
-            resolve(0);
+       
+           
+            equipamento_model.salvar_chamado(chamado, (req, res) => {
+               // console.log(res);
+                resolve(0);
+            
         })
-
+       
     });
     return promise;
 }
@@ -71,13 +77,13 @@ module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
     const promise = new Promise((resolve, reject) => {
 
         if (req.files == null) {
-            console.log("Não há arquivos para fazer upload!");
+           // console.log("Não há arquivos para fazer upload!");
             resolve(1);
         } else {
             if (req.files.upfile) {
                var file = req.files.upfile;
                let tipo = file.name.toString().split(".");
-               console.log(tipo);
+             //  console.log(tipo);
              //  uploadpath = uploadpath+"."+tipo[1];
                 // var type = req.files.upfile.name.split(".");
                 //uploadpath = uploadpath+"."+type[1];
@@ -90,19 +96,19 @@ module.exports.enviar_arquivo = function (app, req, res, uploadpath) {
                 file.mv(uploadpath, function (err) {
                     if (err) {
                         resultado = 1;
-                        console.log("Erro ao enviar os documentos!");
+                       // console.log("Erro ao enviar os documentos!");
                         resolve(1);
                     }
                     else {
                         resultado = 0;
-                        console.log("Update realizado com sucesso!");
+                        //console.log("Update realizado com sucesso!");
                         resolve(0);
                     }
 
                 });
             }
             else {
-                console.log("Erro ao enviar arquivos!")
+               // console.log("Erro ao enviar arquivos!")
                 resultado = 0;
                 resolve(1);
             };
@@ -143,11 +149,23 @@ module.exports.buscar_info_QRCodeArea = (aplicacao, req, resposta, codigo) => {
 
         //vai verificar se o retorno do banco é vazio, se for vazio volta o home
         if (res.length < 1) {
-            let erros_submit = [];
+            
+            noticia_model.buscar_area_by_id(id_qrcode, (req, result_area) => {
+            //console.log(result_area);
+            let resposta_banco = result_area;
+            if(resposta_banco==undefined || resposta_banco.length < 1){
+            erros_submit={}
             this.visualizar_home(aplicacao, req, resposta, { erro: 1 }, erros_submit)
+            }else{
+            //console.log(resposta);
+            let erros_submit = [];
+            this.visualizar_formulario(aplicacao, req, resposta, result_area,{ erro: 0 }, erros_submit)
+            }
+            })
+            
         } else {
             //se o retorno do banco não for vazio vai chamar o formulario
-            console.log(res);
+           // console.log(res);
             let erros_submit = {};
             this.visualizar_formulario(aplicacao, req, resposta, res, erro, erros_submit);
         }
@@ -186,7 +204,7 @@ module.exports.visualizar_formulario = (app, req, res, dados_area_equipamento, e
     //console.log(dados_area_equipamento)
     //res.send(dados_area_equipamento)
     //1 houve erro, 0 não houve erro.
-    console.log(erros_submit);
+   // console.log(erros_submit);
     let result_erro = erro;
     res.render("abertura de chamado/formulario_abertura", { dados: dados_area_equipamento, erro: [], erros_submit })
 }
@@ -197,20 +215,45 @@ module.exports.enviar_chamado = (app, req, res) => {
     var path = require("path")
     let name = uuidv4();
     //definindo o path do arquivo
-    var file = req.files.upfile;
-    let tipo = file.name.toString().split(".");
-
-    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name + "."+tipo[1];
+    
+    let tipo;
+    if(req.files!=null){
+        let file = req.files.upfile;
+        tipo = file.name.toString().split(".");
+        name = name+"."+tipo[1];
+       // console.log("Tem anexo!!!!!!!!!!")
+    }else{
+        name = "";
+    }
+   
+    var uploadpath = path.join(__dirname, '../..') + '/anexos/' + name;
 
     let enviar_arquivo = this.enviar_arquivo(app, req, res, uploadpath);
+    //console.log(name);
+    let nome_equipamento = req.body.equipamento.split('~');
+    //console.log(nome_equipamento);
     let chamado = {
         path_anexo: name,
         descricao: req.body.descricao,
         problema: req.body.problema,
-        equipamento: req.body.equipamento,
+        equipamento: nome_equipamento[1],
         area: req.body.area,
         cpf_usuario: req.body.cpf_usuario
     }
+    var hoje = new Date();
+    let chamado_mail = {
+        data: hoje.getDate() + " - " + hoje.getMonth() + " - " + hoje.getFullYear(),
+        descricao: req.body.descricao,
+        problema: req.body.problema,
+        equipamento: nome_equipamento[1],
+        area: req.body.area,
+        cpf: req.body.cpf_usuario,
+        anexo: ""
+    }
+    if(name!=""){
+       chamado_mail.anexo = "https://manutencao.adsvilhena.ninja/download/" +name;
+    }
+
 
     let erros = [{
         upload: "",
@@ -218,6 +261,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         googleForms: "",
         banco: ""
     }]
+
     enviar_arquivo
         .then(
             //imprimi o resultado do upload do arquivo 1 = ERRO; 0 = SUCESSO; 
@@ -249,33 +293,44 @@ module.exports.enviar_chamado = (app, req, res) => {
         })
         .then((resultado) => {
             erros.googleForms = resultado;
+           
+            
+            
             const mailOptions = {
                 from: 'supqr.ifro@gmail.com', // sender address
                 to: 'supqr.ifro@gmail.com', // list of receivers
                 subject: 'Abertura de Chamado - ' + req.body.area, // Subject line
-                html: "<html><head></head><body><p>Descricao:<p></br><p>{{ " + req.body.descricao + " }}<p><p>Problema:<p></br><p>" + req.body.problema + "<p><p>Equipamento:<p></br><p>" + req.body.equipamento + "<p><p>Area:<p></br><p>" + req.body.area + "<p><p>CPF:<p></br><p>" + req.body.cpf_usuario + "<p><p>Anexo:<p></br><p>http://localhost:2020/download/" + name + "<p></body></html>"
+                html: "<html><head></head><body><p>Descricao:<p></br><p>{{ " + chamado_mail.descricao + " }}<p><p>Problema:<p></br><p>" + chamado_mail.problema + "<p><p>Equipamento:<p></br><p>" + chamado_mail.equipamento + "<p><p>Area:<p></br><p>" + chamado_mail.area + "<p><p>CPF:<p></br><p>" + chamado_mail.cpf + "<p><p>Anexo:<p></br><p>" + chamado_mail.anexo + "<p></body></html>"
             };
+            //console.log(chamado_mail);
+            
             return app.app.controllers.EmailController.enviar_email(req, res, mailOptions);
         })
 
         .then((resultado) => {
             erros.email = resultado;
-            console.log(erros);
+            //console.log(erros);
             //res.end();
         }).then(() => {
 
-            var data = new Date();
-
-            let chamado = {
-                data: data.getDate,
+            var now = new Date();
+            
+            let chamado_ge = {
+                data: now.getDate() + " - " + now.getMonth() + " - " + now.getFullYear(),
                 descricao: req.body.descricao,
                 problema: req.body.problema,
-                equipamento: req.body.equipamento,
+                equipamento: nome_equipamento[1],
                 area: req.body.area,
                 cpf: req.body.cpf_usuario,
-                anexo: "https://192.168.8.109:2525/download/" + name +"."+tipo[1]
+                anexo: ""
             }
-            app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado);
+            if(name!=""){
+               chamado_ge.anexo = "https://manutencao.adsvilhena.ninja/download/" +name;
+            }
+            
+          //  console.log(chamado_ge);
+        
+            app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado_ge);
 
         }, () => {
             console.log("Não enviou")
@@ -303,4 +358,21 @@ module.exports.download_arquivo = (app, req, res, name) => {
 
     var filestream = fs.createReadStream(file);
     filestream.pipe(res);
+}
+
+module.exports.visualizar_listar_chamados = (app, req, res, page)=>{
+    var conexao = app.config.db;
+    var equipamento_model = new app.app.model.ChamadoDAO(conexao);
+
+    equipamento_model.listar_chamados(page, (req, result) => {
+        let chamados = result;
+        equipamento_model.quantidade_chamados((req,result_qtde)=>{
+        let qtde_chamados = result_qtde[0];
+        //console.log(Math.trunc(1));
+        let qtde_paginas = {qtde_paginas : Math.trunc(qtde_chamados.qtde_chamados/10)+1,
+                            pagina:page};
+       // console.log(qtde_paginas);
+        res.render('painel admin/relatorio_chamados.ejs',{chamados,qtde_paginas});
+        })
+    })
 }
