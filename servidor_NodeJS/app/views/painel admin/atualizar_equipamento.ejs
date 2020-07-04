@@ -38,8 +38,7 @@
             <div class="row form-cadastro justify-content-center ">
                 <div class="col-md align-self-center area-form">
                     <div>
-                        <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cad.
-                            Equipamento</h1>
+                        <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cadastro de Equipamentos</h1>
                     </div>
                     <img src="../../images/fabrica-manutencao-logo 2.png" class="float-right mr-1"
                         style="margin-top: -60px;" height="auto" width="50px">
@@ -48,15 +47,13 @@
                             data-toggle="dropdown"><img src="../../images/image 1.png" class="float-left mt-1 mr-1"
                                 height="auto" width="50px"></button>
 
-                        <ul class="dropdown-menu" style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;font-family:Roboto;">
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/index">Início</a></li></routerLink>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="#">Cadastrar Área</a></li></routerLink>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/cadastrar_equipamentos">Cadastrar Equipamento</a></li></routerLink> 
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/cadastrar_tipoarea">Cadastrar tipo de área</a></li></routerLink>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/pesquisar_areas">Pesquisar área</li></routerLinkl>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/pesquisar_equipamentos">Pesquisar Equipamento</a></li></routerLink>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="../painel_admin/pesquisar_tipo_areas">Pesquisar tipo de área</a></li></routerLink>
-                            <routerLink><li><a style="color: white; margin-top: 10px;" href="#">Sair</a></li></routerLink> 
+                        <ul class="dropdown-menu" style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;">
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../index">Início</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../cadastrar_area">Cadastrar Área</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../cadastrar_equipamentos">Cadastrar Equipamento</a></li></routerLink> 
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../pesquisar_areas">Pesquisar área</li></routerLinkl>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../pesquisar_equipamentos">Pesquisar Equipamento</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="#">Sair</a></li></routerLink> 
                         </ul>
                     </div>
                 </div>
@@ -91,7 +88,7 @@
                             <h1 class="small d-block text-left ml-0 mt-4">Nome do equipamento:</h1>
                             <input id="nome_equipamento" type="text" name="nome_equipamento"
                                 class="form-control bg-light" value = "<%=dados_equipamento.nome_equipamento%>">
-                            <h1 class="small d-block text-left ml-0 mt-4">Descrição do Equipamento</h1>
+                            <h1 class="small d-block text-left ml-0 mt-4">Descrição do Equipamento:</h1>
                             <textarea id="descricao_equipamento" name="descricao_equipamento"
                                 class="form-control bg-light" rows="3" value=""><%=dados_equipamento.descricao_equipamento%></textarea>
                             <button type="submit" class="btn btn-warning mt-4">Atualizar equipamento</button>
@@ -106,13 +103,13 @@
 
                         <!-- aqui serão exibidas os problemas cadastrados, tavel colocar um comando for para puxar do BD -->
 
-                        <a id="adicionar" class="float-right  btn btn-link " style="margin-top: 6px;" onclick="adicionar_problema(<%=dados_equipamento.id_equipamento%>)"><img
-                                src="../../images/icons8-adicionar-48.png " width="40px" height="40px"></a>
-                        <input id="novo_problema" type="text" class="small form-control bg-light col-9 mt-4"
-                            placeholder="Adicionar novo problema">
+                        
+                        <boton id="adicionar" class="float-right  btn btn-success" onclick="adicionar_problema(<%=dados_equipamento.id_equipamento%>)">Adicionar</boton>
+                        <input id="novo_problema" type="text" class="small form-control bg-light col-9 mt-2"
+                            placeholder="Adicionar novo problema" >
+                        
 
-
-                        <table class="table" name="tabela_equipamentos" id="tabela_equipamentos">
+                        <table class="table" style="margin-top: 20px;" name="tabela_equipamentos" id="tabela_equipamentos">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -134,20 +131,20 @@
                                 <%}%>
                             </tbody>
                         </table>
-
-                      
-                    </div>
-
-                    <div>
-                        <a href="/painel_admin/pesquisar_equipamentos"><button id="enviar" class="btn btn-success" onclick=buscar_dados()>Buscar equipamentos</button></a>
-                    </div>
-                   
-                    
-
+                    </div>             
                 </div>
             </div>
         </div>
     </main>
+    <footer style="position: fixed;bottom: 0; left: 0;right: 0;">
+        <div class="h-100 ml-0 mt-4">
+            <div class="row justify-content-center ">
+                <div class="col-md align-self-center" style="background-color: #f5f3f0; padding: 10px;">
+                    <p style="text-align: center;margin-bottom: 0px; font-size: x-small;">Desenvolvedores: Dhanielly, Evaldo, Jhoni, Juliano, Manoel </p>
+            </div>
+        </div>
+    </footer>
+
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

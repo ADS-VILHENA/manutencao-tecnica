@@ -35,7 +35,7 @@
         <div class="h-100">
             <!--retirar classe container-fluid -->
             <div class="row form-cadastro justify-content-center ">
-                <div class="col-md-5 align-self-center area-form">
+                <div class="col-md align-self-center area-form">
                     <div>
                         <h1 class="text-center bg-success d-block text-white p-3" style="font-size: 20px;">Cadastrar
                             Área</h1>
@@ -48,21 +48,13 @@
                                 height="auto" width="50px">
                         </button>
                         <ul class="dropdown-menu"
-                            style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;font-family:Roboto;">
-                            <li><a style="color: white; margin-top: 10px;" href="index.html">Início</a></li>
-                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_area.html">Cadastrar Área</a>
-                            </li>
-                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_equipamento.html">Cadastrar
-                                    Equipamento</a></li>
-                            <li><a style="color: white; margin-top: 10px;" href="cadastrar_tipo_area.html">Cadastrar
-                                    tipo de área</a></li>
-                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_area.html">Pesquisar área
-                            </li>
-                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_equipamento.html">Pesquisar
-                                    Equipamento</a></li>
-                            <li><a style="color: white; margin-top: 10px;" href="pesquisar_tipo_area.html">Pesquisar
-                                    tipo de área</a></li>
-                            <li><a style="color: white; margin-top: 10px;" href="#">Sair</a></li>
+                            style="padding: 20px; background-color: rgba(17, 16, 16, 0.89); font-size:25px;">
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../index">Início</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../cadastrar_area">Cadastrar Área</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../cadastrar_equipamentos">Cadastrar Equipamento</a></li></routerLink> 
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../pesquisar_areas">Pesquisar área</li></routerLinkl>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="../pesquisar_equipamentos">Pesquisar Equipamento</a></li></routerLink>
+                                <routerLink><li><a style="color: white; margin-top: 10px;" href="#">Sair</a></li></routerLink> 
                         </ul>
                     </div>
                 </div>
@@ -72,21 +64,21 @@
     <main>
         <div class="container-fluid h-100">
             <div class="row form-cadastro justify-content-center ">
-                <div class="col-md-5 align-self-center area-form">
+                <div class="col-md-7 align-self-center area-form">
                     <div>
 
-                        <h1 class="small d-block text-right" style="margin-top: -30px;font-size: 20px;">Gerar QR Code
+                        <h1 class="small d-block text-right" style="margin-top: -10px;font-size: 20px;">Gerar QR Code
                         </h1>
                         <input id="id_area" value="<%=dados_area.id_area%>" type="text"
-                            class="form-control bg-light col-3 mt-4" style="display:none;">
+                            class="form-control bg-light col-3 mt-4" style="display:none; ">
                         <button class="float-right btn btn-link"><img src="../../images/QRcode.png" class="float-right"
-                                alt="qr" style="margin-top: -50px;margin-right: 35px;" height="50px"
-                                width="50px"></button>
+                                alt="qr" style="margin-top: 2px;margin-right: 30px; margin-bottom: 10px;" height="60px"
+                                width="60px"></button>
                     </div>
                     <div>
-                        <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Nome da Área</h1>
+                        <h1 class=" d-block text-left ml-0  " style="font-size: 20px; margin-top: 70px;">Nome da Área</h1>
                         <input id="nome" type="text" value="<%=dados_area.nome_area%>"
-                            class="form-control bg-light mt-4">
+                            class="form-control bg-light mt-2">
                     </div>
                     <div>
                         <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Descrição da Área</h1>
@@ -126,7 +118,7 @@
                             
                                 <a id="pesquisar_equipamento" onclick="listar_equipamentos(<%= dados_area.id_area %>)"><button
                                     class="float-right ml-0 btn btn-link"><img src="../../images/a.png" width="30px"
-                                        height="30px" style="margin-top: -40px; margin-right:-50px;"
+                                        height="30px" style="margin-top: -40px; margin-right:-10px;"
                                         class="float-right "></button></a>
 
                             <table class="table" name="tabela_equipamentos" id="tabela_equipamentos">
@@ -170,6 +162,15 @@
             </div>
         </div>
     </main>
+    <footer style="position: fixed;bottom: 0; left: 0;right: 0;">
+        <div class="h-100 ml-0 mt-4">
+            <div class="row justify-content-center ">
+                <div class="col-md align-self-center" style="background-color: #f5f3f0; padding: 10px;">
+                    <p style="text-align: center;margin-bottom: 0px;">Desenvolvedores: Dhanielly, Evaldo, Jhoni, Juliano, Manoel </p>
+            </div>
+        </div>
+    </footer>
+
 
 <script>
     function listar_equipamentos(id_area){
