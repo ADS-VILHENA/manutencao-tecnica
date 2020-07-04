@@ -3,18 +3,18 @@ var request = require('superagent');
 module.exports = (aplicacao) => {
     //rota para imprimir dados do google planilha
     aplicacao.get('/chamados_from_google', (req, res) => {
-       
+
         aplicacao.app.controllers.ChamadoController.send_to_google_planilhas(aplicacao, req, res);
     })
     //rota para visualizar a página inicial
     aplicacao.get('/', (req, res) => {
         let erros_submit = [];
-        aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 0 },erros_submit);
+        aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 0 }, erros_submit);
     })
-
-    aplicacao.post('/exibir/formulario/', (req, res) => {
+    
+    aplicacao.get('/exibir/formulario/', (req, res) => {
         //receber o codigo pelo body
-        let codigo = req.body.codigo;
+        let codigo = req.query.codigo;
         console.log(codigo);
         //separar o identificador
         let identificador = codigo.substring(0, 1).toUpperCase();
@@ -81,7 +81,7 @@ module.exports = (aplicacao) => {
     //rota para enviar dados para o googleForms
     aplicacao.get('/acao/enviar_googleforms', (req, res) => {
         //informar os dados do formulário que vai ser enviado
-        
+
 
     })
 
@@ -103,19 +103,19 @@ module.exports = (aplicacao) => {
 
     aplicacao.post('/abrir_chamado', function (req, res, next) {
         //fazer upload do arquivo
-        aplicacao.app.controllers.ChamadoController.enviar_chamado(aplicacao,req, res);
+        aplicacao.app.controllers.ChamadoController.enviar_chamado(aplicacao, req, res);
         //salvar no banco de dados
 
         //enviar para email ou google_forms
-        
+
     });
 
-    aplicacao.get('/download/:name',function(req,res){
-      let name = req.params.name;
-      
-      aplicacao.app.controllers.ChamadoController.download_arquivo(aplicacao,req,res,name);
-      
-        })
+    aplicacao.get('/download/:name', function (req, res) {
+        let name = req.params.name;
+
+        aplicacao.app.controllers.ChamadoController.download_arquivo(aplicacao, req, res, name);
+
+    })
 
     //rota para salvar documentos na pasta
 }
