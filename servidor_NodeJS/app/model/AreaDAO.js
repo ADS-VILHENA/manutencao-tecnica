@@ -8,6 +8,7 @@ AreaDAO.prototype.buscar_Area_bd = function(callback){
 
 AreaDAO.prototype.atualizar_area = function(area,callback){
     let query = "UPDATE area SET nome = '"+area.nome+"', descricao = '"+area.descricao+"' WHERE id_area ="+area.id_area+";";
+    console.log(query);
     this._conexao.query(query, callback);
   }
 
@@ -26,6 +27,7 @@ AreaDAO.prototype.atualizar_area = function(area,callback){
  AreaDAO.prototype.buscar_area_bd_by_id = function(id,callback){
     this._conexao.query('SELECT * FROM area where id_area ='+id+';',callback); 
  }
+
  
  AreaDAO.prototype.buscar_area_by_area_id = function(id,callback){
      let query = 'SELECT e.nome_equipamento, ae.id_area_equipamento FROM equipamento AS e INNER JOIN area_equipamento AS ae on ae.id_equipamento  = e.id_equipamento INNER JOIN area AS a on a.id_area = ae.id_area where ae.id_area ='+id; 

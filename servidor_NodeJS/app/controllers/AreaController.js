@@ -101,6 +101,21 @@ module.exports.atualizar_area_by_id = function (aplicacao, req, res, id_area, te
 
 
 }
+
+module.exports.atualizar_area = function(aplicacao,req,res){
+    var conexao = aplicacao.config.db;
+  var areaDAO = new aplicacao.app.model.AreaDAO(conexao);
+  let area = req.body;
+  
+
+  areaDAO.atualizar_area(area,(requisicao,result)=>{
+  console.log(result);
+    if(result.affectedRows == 1){
+    res.redirect('../../painel_admin/atualizar_area_by_id/'+req.body.id_area);
+     }
+  })
+  
+}
 module.exports.adicionar_equipamento_na_area = function(aplicacao,req, res,id_equipamento,id_area){
   var conexao = aplicacao.config.db;
   var areaDAO = new aplicacao.app.model.AreaDAO(conexao);

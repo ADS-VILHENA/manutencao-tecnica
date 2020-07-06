@@ -126,6 +126,14 @@ module.exports = (aplicacao) => {
             res.redirect('/painel_admin');
         }
     })
+    aplicacao.post('/painel_admin/acao/atualizar_area',(req,res)=>{
+        if (req.session.autorizado == true) {
+            aplicacao.app.controllers.AreaController.atualizar_area(aplicacao, req, res);
+        } else {
+            res.redirect('/painel_admin');
+        }
+    })
+
     aplicacao.get('/painel_admin/atualizar_area_by_id/:id', (req, res) => {
         if (req.session.autorizado == true) {
             let id = req.params.id;

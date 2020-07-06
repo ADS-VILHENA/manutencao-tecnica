@@ -83,10 +83,11 @@
             <div class="row form-cadastro justify-content-center ">
                 <div class="col-md-7 align-self-center area-form">
                     <div>
+<form action="/painel_admin/acao/atualizar_area" method="post">
 
                         <h1 class="small d-block text-right" style="margin-top: -10px;font-size: 20px;">Gerar QR Code
                         </h1>
-                        <input id="id_area" value="<%=dados_area.id_area%>" type="text"
+                        <input name = "id_area" id="id_area" value="<%=dados_area.id_area%>" type="text"
                             class="form-control bg-light col-3 mt-4" style="display:none; ">
                         <button class="float-right btn btn-link" data-toggle="modal" data-target="#modal_qrcode"
                             onclick="gerarqrcode('A<%=dados_area.id_area%>');"><img src="../../images/QRcode.png"
@@ -97,18 +98,19 @@
                     <div>
                         <h1 class=" d-block text-left ml-0  " style="font-size: 20px; margin-top: 70px;">Nome da Área
                         </h1>
-                        <input id="nome" type="text" value="<%=dados_area.nome_area%>"
+                        <input name="nome" id="nome" type="text" value="<%=dados_area.nome_area%>"
                             class="form-control bg-light mt-2">
                     </div>
                     <div>
                         <h1 class=" d-block text-left ml-0 mt-4" style="font-size: 20px;">Descrição da Área</h1>
-                        <textarea class="form-control bg-light" rows="3"><%=dados_area.descricao_area%></textarea>
+                        <textarea name="descricao" class="form-control bg-light" rows="3"><%=dados_area.descricao_area%></textarea>
                         <!-- aqui serão exibidas as áreas cadastradas, tavel colocar um comando for ou while para puxar do BD -->
                     </div>
                     <div>
                         <button type="submit" class="btn btn-warning mt-4">Atualizar Area</button>
                     </div>
                     <div>
+</form>
                         <h1 class="d-block text-left ml-0 mt-4" style="font-size: 20px;" style="font-size: 20px;">
                             Equipamentos: </h1>
                         <%for(var i=0; i < equipamentos_da_area.length; i++){%>
