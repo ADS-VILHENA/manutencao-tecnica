@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var express_validator = require('express-validator');
 //importar o upload
 var upload = require('express-fileupload');
+//importando o express Session
+var expressSession = require('express-session')
 
 //iniciar o express 
 var app = express();
@@ -16,13 +18,20 @@ var app = express();
 app.set('view engine','ejs');
 app.set('views','./app/views');
 
+
+
 //configurar o middleware express.static
 app.use(upload());
 app.use(express.static('./app/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-//configurando o middleware express-validator
+//configurando o middleware express-session
+app.use(expressSession({
+    secret:'supqrifrovilhena455565',
+    resave: false,
+    saveUninitialized:false
+}));
 
 
 
