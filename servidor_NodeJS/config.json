@@ -9,5 +9,10 @@
     },
     "CHAMADO":{
         "metodo":"GoogleForms/Email/GLPI"
+    },
+    "LOGIN":{
+        "usuario":"admin",
+        "senha":"test"
     }
+
 }
