@@ -1,9 +1,9 @@
 # manutencao-tecnica
 
 Para iniciar aplicação
-cd servidor_NodeJS
-npm install
-node app.js
+* cd servidor_NodeJS
+* npm install
+* node app.js
 
 Para acessar o painel administrador
 /painel_admin
