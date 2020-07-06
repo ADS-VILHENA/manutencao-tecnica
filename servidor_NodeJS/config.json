@@ -1,18 +1,16 @@
 {
-    "PAINEL_ADMIN":{
-        "usuario":"admin",
-        "senha":"admin"
+    "DATABASE": {
+        "NAME": "",
+        "PASSWORD": ""
     },
-    "DATABASE":{
-        "NAME":"supQr",
-        "PASSWORD":"supQr"
+    "CHAMADO": {
+        "email": true,
+        "planilhas_google": true,
+        "google_forms": false,
+        "mysql": true
     },
-    "CHAMADO":{
-        "metodo":"GoogleForms/Email/GLPI"
-    },
-    "LOGIN":{
-        "usuario":"admin",
-        "senha":"test"
+    "LOGIN": {
+        "usuario": "admin",
+        "senha": "test"
     }
-
 }

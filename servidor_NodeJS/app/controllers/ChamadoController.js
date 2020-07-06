@@ -261,6 +261,7 @@ module.exports.enviar_chamado = (app, req, res) => {
         googleForms: "",
         banco: ""
     }]
+    let paremetros_envio = require('../../config.json');
 
     enviar_arquivo
         .then(
@@ -270,10 +271,12 @@ module.exports.enviar_chamado = (app, req, res) => {
 
             })
         .then(() => {
-
-            return this.salvar_chamado(app, req, res, chamado);
+            if(paremetros_envio.CHAMADO.mysql==true){
+                return this.salvar_chamado(app, req, res, chamado);
+            }else{
+                return 0;
+            }    
         }
-
         )
         .then((resultado) => {
             erros.banco = resultado;
@@ -287,15 +290,14 @@ module.exports.enviar_chamado = (app, req, res) => {
                 cpf: req.body.cpf_usuario
             }
 
-
-            return app.app.controllers.GoogleFormsController.enviar_googleforms(req, res, formulario);
-
+            if(paremetros_envio.CHAMADO.google_forms == true){
+                return app.app.controllers.GoogleFormsController.enviar_googleforms(req, res, formulario);
+            }else{
+                return 0;
+            }  
         })
         .then((resultado) => {
             erros.googleForms = resultado;
-           
-            
-            
             const mailOptions = {
                 from: 'supqr.ifro@gmail.com', // sender address
                 to: 'supqr.ifro@gmail.com', // list of receivers
@@ -303,8 +305,12 @@ module.exports.enviar_chamado = (app, req, res) => {
                 html: "<html><head></head><body><p>Descricao:<p></br><p>{{ " + chamado_mail.descricao + " }}<p><p>Problema:<p></br><p>" + chamado_mail.problema + "<p><p>Equipamento:<p></br><p>" + chamado_mail.equipamento + "<p><p>Area:<p></br><p>" + chamado_mail.area + "<p><p>CPF:<p></br><p>" + chamado_mail.cpf + "<p><p>Anexo:<p></br><p>" + chamado_mail.anexo + "<p></body></html>"
             };
             //console.log(chamado_mail);
-            
-            return app.app.controllers.EmailController.enviar_email(req, res, mailOptions);
+            if(paremetros_envio.CHAMADO.email == true){
+                 return app.app.controllers.EmailController.enviar_email(req, res, mailOptions);
+            }else{
+                return 0;
+            }
+           
         })
 
         .then((resultado) => {
@@ -329,8 +335,12 @@ module.exports.enviar_chamado = (app, req, res) => {
             }
             
           //  console.log(chamado_ge);
-        
+            if(paremetros_envio.CHAMADO.planilhas_google == true){
             app.app.controllers.ChamadoController.send_to_google_planilhas(app, req, res, chamado_ge);
+            }else{
+                return 0;
+            }
+           
 
         }, () => {
             console.log("Não enviou")
