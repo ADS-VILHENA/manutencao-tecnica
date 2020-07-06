@@ -11,41 +11,49 @@ module.exports = (aplicacao) => {
         let erros_submit = [];
         aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 0 }, erros_submit);
     })
-    
+
     aplicacao.get('/exibir/formulario/', (req, res) => {
         //receber o codigo pelo body
         let codigo = req.query.codigo;
-        console.log(codigo);
-        //separar o identificador
-        let identificador = codigo.substring(0, 1).toUpperCase();
-        let id = codigo.substring(1, codigo.length);
+        console.log(codigo.substring(0,4));
+        if (codigo.substring(0, 4) == 'http') {
+            let codsplit = codigo.split('/');
+            let rota = "../"+codsplit[codsplit.length-2]+'/'+codsplit[codsplit.length-1];
+            console.log(rota);
+            res.redirect(rota);
+        } else {
 
-        function isNumber(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        }
+            console.log(codigo);
+            //separar o identificador
+            let identificador = codigo.substring(0, 1).toUpperCase();
+            let id = codigo.substring(1, codigo.length);
 
-        //A  -> identificador
-        //2525--> id
-        if (isNumber(id) == true) {
-            if (identificador == "A") {
-                //vai realizar as buscas de área e redenrizar o formulário com informações
-                //console.log("vai construir area")
-                aplicacao.app.controllers.ChamadoController.buscar_info_QRCodeArea(aplicacao, req, res, id);
-            } else if (identificador == "E") {
-                //vai realizar as buscas de área e redenrizar o formulário com informações
-                aplicacao.app.controllers.ChamadoController.buscar_info_QRCodeEquipamento(aplicacao, req, res, id);
-                console.log("O código é um equipamento")
+            function isNumber(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
+            }
+
+            //A  -> identificador
+            //2525--> id
+            if (isNumber(id) == true) {
+                if (identificador == "A") {
+                    //vai realizar as buscas de área e redenrizar o formulário com informações
+                    //console.log("vai construir area")
+                    aplicacao.app.controllers.ChamadoController.buscar_info_QRCodeArea(aplicacao, req, res, id);
+                } else if (identificador == "E") {
+                    //vai realizar as buscas de área e redenrizar o formulário com informações
+                    aplicacao.app.controllers.ChamadoController.buscar_info_QRCodeEquipamento(aplicacao, req, res, id);
+                    console.log("O código é um equipamento")
+                } else {
+                    let erros_submit = [];
+                    aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 1 }, erros_submit);
+                }
             } else {
                 let erros_submit = [];
                 aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 1 }, erros_submit);
             }
-        } else {
-            let erros_submit = [];
-            aplicacao.app.controllers.ChamadoController.visualizar_home(aplicacao, req, res, { erro: 1 }, erros_submit);
+            //console.log(id);
+
         }
-        //console.log(id);
-
-
 
     })
 
